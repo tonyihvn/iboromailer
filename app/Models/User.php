@@ -50,8 +50,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function links()
+    public function projects()
     {
-        return $this->hasMany(links::class, 'user_id', 'id');
+        return $this->hasMany(projects::class, 'client_id', 'id');
+    }
+
+    public function tasks()
+    {
+        return $this->hasMany(tasks::class, 'assigned_to', 'id');
     }
 }

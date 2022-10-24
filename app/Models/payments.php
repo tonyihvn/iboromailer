@@ -11,8 +11,8 @@ class payments extends Model
 
     protected $guarded = [];
 
-    public function link()
+    public function business()
     {
-        return $this->belongsTo(links::class, 'id', 'link_id');
+        return $this->belongsTo(businesses::class, 'id', 'business_id');
     }
 }

@@ -18,11 +18,12 @@ class CreatePaymentsTable extends Migration
             $table->unsignedBigInteger('user_id')->index();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
-            $table->unsignedBigInteger('link_id')->index();
-            $table->foreign('link_id')->references('id')->on('links')->onDelete('cascade');
-
-            $table->integer('target_views')->default(0)->nullable();
+               $table->integer('target_views')->default(0)->nullable();
             $table->date('payment_date')->nullable();
+
+            $table->unsignedBigInteger('business_id')->index()->nullable();
+            $table->foreign('business_id')->references('id')->on('businesses');
+
             $table->timestamps();
         });
     }

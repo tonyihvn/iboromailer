@@ -16,67 +16,77 @@
     </div><!-- /.row -->
   </div><!-- /.container-fluid -->
 </div>
+
+
 <style>
-  .center{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  thead{
-    background-color: rgb(59, 141, 222);
-    color: white;
-  }
+    body{
+        background:#eee;
+        }
+
+        .card-box {
+            position: relative;
+            color: #fff;
+            padding: 20px 10px 40px;
+            margin: 20px 0px;
+        }
+        .card-box:hover {
+            text-decoration: none;
+            color: #f1f1f1;
+        }
+        .card-box:hover .icon i {
+            font-size: 100px;
+            transition: 1s;
+            -webkit-transition: 1s;
+        }
+        .card-box .inner {
+            padding: 5px 10px 0 10px;
+        }
+        .card-box h3 {
+            font-size: 27px;
+            font-weight: bold;
+            margin: 0 0 8px 0;
+            white-space: nowrap;
+            padding: 0;
+            text-align: left;
+        }
+        .card-box p {
+            font-size: 15px;
+        }
+        .card-box .icon {
+            position: absolute;
+            top: auto;
+            bottom: 5px;
+            right: 5px;
+            z-index: 0;
+            font-size: 72px;
+            color: rgba(0, 0, 0, 0.15);
+        }
+        .card-box .card-box-footer {
+            position: absolute;
+            left: 0px;
+            bottom: 0px;
+            text-align: center;
+            padding: 3px 0;
+            color: rgba(255, 255, 255, 0.8);
+            background: rgba(0, 0, 0, 0.1);
+            width: 100%;
+            text-decoration: none;
+        }
+        .card-box:hover .card-box-footer {
+            background: rgba(0, 0, 0, 0.3);
+        }
+        .bg-blue {
+            background-color: #00c0ef !important;
+        }
+        .bg-green {
+            background-color: #00a65a !important;
+        }
+        .bg-orange {
+            background-color: #f39c12 !important;
+        }
+        .bg-red {
+            background-color: #d9534f !important;
+        }
+
 </style>
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">
-                  @if (Auth()->user()->status=="InActive")
-                      <span style="color: red"><i class="fa fa-info"></i> This Account is InActive. Please promote a link to activate</span>
-                  @else
-                      Hi, {{Auth()->user()->name}}
-                  @endif
-                </div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    <div class="center">
-                    <button class="btn btn-lg btn-primary"><i class="fa fa-microphone"></i> Promote a Link</button>
-                    </div>
-                    <hr>
-
-                    <div class="panel-body">
-                      <table class="table">
-                          <thead>
-                              <tr>
-                                  <th>Link</th>
-                                  <th>Views</th>
-                                  <th>Status</th>
-                              </tr>
-                          </thead>
-                          <tbody>
-
-                                  <tr>
-                                      <td>gdhjd</td>
-                                      <td>gdfs</td>
-                                      <td>hgdfhshj</td>
-
-                                  </tr>
-
-
-
-                          </tbody>
-                      </table>
-                  </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 @endsection

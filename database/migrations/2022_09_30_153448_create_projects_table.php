@@ -15,10 +15,17 @@ class CreateProjectsTable extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id')->index();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('client_id')->index();
+            $table->foreign('client_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('title',150)->nullable();
             $table->date('start_date')->nullable();
             $table->string('estimated_duration',30)->nullable();
+            $table->text('details')->nullable();
+            $table->unsignedBigInteger('project_manager')->index();
+            $table->foreign('project_manager')->references('id')->on('users')->onDelete('cascade');
+            $table->string('status',30)->nullable();
+            $table->unsignedBigInteger('business_id')->index()->nullable();
+            $table->foreign('business_id')->references('id')->on('businesses');
             $table->timestamps();
         });
     }

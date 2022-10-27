@@ -26,7 +26,10 @@ class ProjectsController extends Controller
     public function create($cid)
     {
         return view('new-project')->with(['cid'=>$cid]);
+        return view('project-milestone')->with(['cid'=>$cid]);
     }
+
+
 
     /**
      * Store a newly created resource in storage.

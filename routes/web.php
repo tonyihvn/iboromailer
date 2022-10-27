@@ -19,7 +19,14 @@ Route::get('/', function () {
 
 Auth::routes();
 
+// HOME
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+// PROJECTS
+Route::resource('/projects', [App\Http\Controllers\ProjectsController::class, 'index'])->name('projects');
+Route::get('/new-project/{cid}', [App\Http\Controllers\ProjectsController::class, 'create'])->name('new-project');
+
 
 // MATERIALS
 Route::get('/materials', [App\Http\Controllers\MaterialsController::class, 'index'])->name('materials')->middleware('role:Admin,Super,Staff');

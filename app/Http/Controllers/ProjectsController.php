@@ -15,7 +15,7 @@ class ProjectsController extends Controller
      */
     public function index()
     {
-        //
+        return view('projects');
     }
 
     /**
@@ -23,9 +23,9 @@ class ProjectsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($cid)
     {
-        //
+        return view('new-project')->with(['cid'=>$cid]);
     }
 
     /**

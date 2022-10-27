@@ -18,6 +18,7 @@ class CreateProjectsTable extends Migration
             $table->unsignedBigInteger('client_id')->index();
             $table->foreign('client_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('title',150)->nullable();
+            $table->string('location',150)->nullable();
             $table->date('start_date')->nullable();
             $table->string('estimated_duration',30)->nullable();
             $table->text('details')->nullable();

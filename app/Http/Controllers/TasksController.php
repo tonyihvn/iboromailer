@@ -15,7 +15,7 @@ class TasksController extends Controller
      */
     public function index()
     {
-        //
+        return view('task');
     }
 
     /**
@@ -23,9 +23,10 @@ class TasksController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($cid)
     {
-        //
+        return view('project-task')->with(['cid'=>$cid]);
+
     }
 
     /**

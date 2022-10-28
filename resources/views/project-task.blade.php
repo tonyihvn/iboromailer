@@ -22,7 +22,7 @@
     <h4 class="card-title">New Task</h4>
   </div>
   <div class="card-body">
-    <form action="{{route('project-task.create')}}" method="post">
+    <form action="{{route('project-task')}}" method="post">
 
           <div class="form-group col-md-12">
             <label for="title">Subject</label>
@@ -42,7 +42,9 @@
             <label for="category">Task Category</label>
             <input type="text"
               class="form-control" name="category" id="category" aria-describedby="Task Category" placeholder="Enter Task Category">
-            <small id="task_category" class="form-text text-muted">Select the Category</small>
+            <label for="status">Status</label>
+            <input type="text"
+              class="form-control" name="status" id="status" aria-describedby="Status">
           </div>
 
           <div class="form-group col-md-12">

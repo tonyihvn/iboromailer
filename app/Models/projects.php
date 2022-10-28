@@ -20,4 +20,14 @@ class projects extends Model
     {
         return $this->hasMany(project_milestones::class, 'project_id', 'id');
     }
+
+    public function project_files()
+    {
+        return $this->hasMany(project_files::class, 'project_id', 'id');
+    }
+
+    public function client()
+    {
+        return $this->belongsTo(User::class, 'client_id', 'id');
+    }
 }

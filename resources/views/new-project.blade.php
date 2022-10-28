@@ -22,7 +22,7 @@
     <h4 class="card-title">New Project Form</h4>
   </div>
   <div class="card-body">
-    <form action="{{route('projects.store')}}" method="post">
+    <form action="{{route('save-project')}}" method="post">
       <input type="hidden" name="client_id" value="{{$cid}}">
 
           <div class="form-group col-md-12">

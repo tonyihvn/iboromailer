@@ -23,9 +23,9 @@ class ProjectMilestonesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($pid)
     {
-        //
+        return view('project-milestone')->with(['project_id'=>$pid]);
     }
 
     /**

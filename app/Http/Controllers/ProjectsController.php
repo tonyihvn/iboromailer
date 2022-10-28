@@ -26,9 +26,23 @@ class ProjectsController extends Controller
     public function create($cid)
     {
         return view('new-project')->with(['cid'=>$cid]);
-        return view('project-milestone')->with(['cid'=>$cid]);
-        return view('project-task')->with(['cid'=>$cid]);
+
     }
+
+    public function clientProjects($cid)
+    {
+        $clientprojects = projects::where('client_id',$cid)->get();
+        return view('projects')->with(['projects'=>$clientprojects]);
+
+    }
+
+    public function projectDashboard($pid)
+    {
+        $project = projects::where('id',$pid)->first();
+        return view('project-dashboard')->with(['project'=>$project]);
+
+    }
+
 
 
 

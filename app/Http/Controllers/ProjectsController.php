@@ -27,6 +27,7 @@ class ProjectsController extends Controller
     {
         return view('new-project')->with(['cid'=>$cid]);
         return view('project-milestone')->with(['cid'=>$cid]);
+        return view('project-task')->with(['cid'=>$cid]);
     }
 
 

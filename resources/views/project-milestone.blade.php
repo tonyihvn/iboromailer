@@ -19,10 +19,10 @@
 
 <div class="card card-primary">
   <div class="card-header">
-    <h4 class="card-title">New Project Milestone</h4>
+    <h4 class="card-title">Project Milestone</h4>
   </div>
   <div class="card-body">
-    <form action="{{route('projects.store')}}" method="post">
+    <form action="{{route('project-milestone.create')}}" method="post">
       <input type="hidden" name="client_id" value="{{$cid}}">
 
           <div class="form-group col-md-12">
@@ -45,29 +45,17 @@
               <div class="input-group-prepend">
                 <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
               </div>
-              <input type="text" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" data-mask="" inputmode="numeric">
+              <input type="text" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" data-mask="" name="start_date" id="start_date" inputmode="numeric" placeholder="Enter a Start Date">
               <div class="input-group-prepend">
                 <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
               </div>
-              <input type="text" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" data-mask="" inputmode="numeric">
+              <input type="text" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" data-mask="" name="end_date" id="end_date" inputmode="numeric" placeholder="Enter End Date">
             </div>
             <small id="Milestone_details" class="form-text text-muted">Duration of the Milestone</small>
           </div>
 
-          <div class="form-group">
-            <label>Date masks:</label>
-
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-              </div>
-              <input type="text" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" data-mask="" inputmode="numeric">
-            </div>
-            <!-- /.input group -->
-          </div>
-
           <div class="form-group col-md-12">
-
+            <button type="submit" class="btn btn-primary">Submit</button>
           </div>
     </form>
   </div>

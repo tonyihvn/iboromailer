@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\project_milestones;
+use App\Models\tasks;
 use App\Http\Requests\Storeproject_milestonesRequest;
 use App\Http\Requests\Updateproject_milestonesRequest;
+use Illuminate\Http\Request;
+
 
 class ProjectMilestonesController extends Controller
 {
@@ -40,7 +43,7 @@ class ProjectMilestonesController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified r  esource.
      *
      * @param  \App\Models\project_milestones  $project_milestones
      * @return \Illuminate\Http\Response
@@ -82,5 +85,27 @@ class ProjectMilestonesController extends Controller
     public function destroy(project_milestones $project_milestones)
     {
         //
+    }
+
+    public function saveMilestone(Request $request){
+        project_milestones::create($request->all());
+        $message = "Project Milestone added successfully";
+        return redirect()->back()->with(['message'=>$message]);
+    }
+
+    public function saveMilestoneTask(Request $request){
+        tasks::create($request->all());
+        $message = "Milestone Task added successfully";
+        return redirect()->back()->with(['message'=>$message]);
+    }
+
+    public function milestone($mid){
+        $milestone = project_milestones::where('id',$mid)->first();
+        return view('milestone')->with(['milestone'=>$milestone]);
+    }
+
+    public function milestoneTask($mid){
+        $project_id = project_milestones::select('project_id')->where('id',$mid)->first()->project_id;
+        return view('project-task')->with(['milestone_id'=>$mid,'project_id'=>$project_id]);
     }
 }

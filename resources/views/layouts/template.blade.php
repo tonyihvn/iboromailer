@@ -22,6 +22,9 @@
   <!-- overlayScrollbars -->
   <link rel="stylesheet" href="{{asset('plugins/overlayScrollbars/css/OverlayScrollbars.min.css')}}">
   <!-- Daterange picker -->
+  <link rel="stylesheet" href="{{asset('plugins/select2/css/select2.min.css')}}">
+  <link rel="stylesheet" href="{{asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
+
   <link rel="stylesheet" href="{{asset('plugins/daterangepicker/daterangepicker.css')}}">
   <!-- summernote -->
   <link rel="stylesheet" href="{{asset('plugins/summernote/summernote-bs4.min.css')}}">
@@ -386,7 +389,17 @@
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
+
+        <!-----------------------------START YIELD PAGE CONTENT -->
+					@if (Session::get('message'))
+          <div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+            <i class="fa fa-check-circle"></i> {!!Session::get('message')!!}
+          </div>
+        @endif
         @yield('content')
+
+        <!----------------------------END YIELD PAGE CONTENT -->
       </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
@@ -442,6 +455,7 @@
 <script src="{{asset('dist/js/demo.js')}}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{asset('dist/js/pages/dashboard.js')}}"></script>
+<script src="{{asset('plugins/select2/js/select2.full.min.js')}}"></script>
 
 <script>
 
@@ -450,6 +464,8 @@
        format: 'YYYY-MM-DD'
    });
 
+
+   $('.select2').select2()
 
 </script>
 

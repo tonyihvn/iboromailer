@@ -41,7 +41,11 @@ Route::get('/project-dashboard/{pid}', [App\Http\Controllers\ProjectsController:
 // MILESTONES
 Route::get('milestones', [App\Http\Controllers\ProjectMilestonesController::class, 'index'])->name('milestones');
 Route::get('new-milestone/{pid}', [App\Http\Controllers\ProjectMilestonesController::class, 'create'])->name('new-milestone');
-Route::post('save-milestone', [App\Http\Controllers\ProjectMilestonesController::class, 'store'])->name('save-milestone');
+Route::post('savemilestone', [App\Http\Controllers\ProjectMilestonesController::class, 'saveMilestone'])->name('savemilestone');
+Route::get('milestone/{mid}', [App\Http\Controllers\ProjectMilestonesController::class, 'milestone'])->name('milestone');
+Route::get('milestone-task/{mid}', [App\Http\Controllers\ProjectMilestonesController::class, 'milestoneTask'])->name('milestone-task');
+Route::post('savemilestoneTask', [App\Http\Controllers\ProjectMilestonesController::class, 'saveMilestoneTask'])->name('savemilestoneTask');
+
 
 //TASK
 Route::get('task', [App\Http\Controllers\TasksController::class, 'index'])->name('task');

@@ -22,7 +22,12 @@
     <h4 class="card-title">New Task</h4>
   </div>
   <div class="card-body">
-    <form action="{{route('project-task')}}" method="post">
+    <form action="{{route('savemilestoneTask')}}" method="post">
+          @csrf
+
+          <input type="hidden" name="project_id" value="{{isset($project_id) ? $project_id : ''}}">
+          <input type="hidden" name="milestone_id" value="{{isset($milestone_id) ? $milestone_id : ''}}">
+          <input type="hidden" name="business_id" value="{{Auth()->user()->business_id}}">
 
           <div class="form-group col-md-12">
             <label for="title">Subject</label>
@@ -38,33 +43,66 @@
             <small id="task_details" class="form-text text-muted">A Detailed infomation about the task being entered</small>
           </div>
 
-          <div class="form-group col-md-12">
-            <label for="category">Task Category</label>
-            <input type="text"
-              class="form-control" name="category" id="category" aria-describedby="Task Category" placeholder="Enter Task Category">
-            <label for="status">Status</label>
-            <input type="text"
-              class="form-control" name="status" id="status" aria-describedby="Status">
-          </div>
 
-          <div class="form-group col-md-12">
-            <label for="details">Duration</label>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-              </div>
-              <input type="text" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" data-mask="" name="start_date" id="start_date" inputmode="numeric" placeholder="Enter start date">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-              </div>
-              <input type="text" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" data-mask="" name="end_date" id="end_date" inputmode="numeric" placeholder="Enter end date">
+          <div class="form-group row">
+
+
+            <div class="col-md-4">
+              <label>Start Date:</label>
+                <div class="input-group date" id="start_date_activator" data-target-input="nearest">
+                    <input type="text" name="start_date" class="form-control datetimepicker-input" data-target="#start_date_activator">
+                    <div class="input-group-append" data-target="#start_date_activator" data-toggle="datetimepicker">
+                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                    </div>
+                </div>
             </div>
-            <small id="Task_details" class="form-text text-muted">Duration of the Task</small>
+
+            <div class="col-md-4">
+              <label>End Date:</label>
+                <div class="input-group date" id="end_date_activator" data-target-input="nearest">
+                    <input type="text" name="end_date" class="form-control datetimepicker-input" data-target="#end_date_activator">
+                    <div class="input-group-append" data-target="#end_date_activator" data-toggle="datetimepicker">
+                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <label for="estimated_cost">Estimated Cost</label>
+                <input type="number" step="0.01"
+                  class="form-control" name="estimated_cost" id="estimated_cost" placeholder="Estimated Cost">
+            </div>
+
           </div>
 
-          <div class="form-group col-md-12">
-            <button type="submit" class="btn btn-primary">Submit</button>
+          <div class="form-group row">
+            <div class="col-md-4">
+                <label>Assigned To:</label>
+                <select name="assigned_to" class="form-control select2" >
+                  @foreach ($staff as $st)
+                  <option data-select2-id="{{$st->id}}" value="{{$st->id}}">{{$st->name}}</option>
+                  @endforeach
+
+                </select>
+            </div>
+
+            <div class="col-md-3">
+              <label>Status:</label>
+              <select name="status" class="form-control">
+                <option value="Upcoming">Upcoming</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Completed">Completed</option>
+                <option value="Paused">Paused</option>
+                <option value="Terminated">Terminated</option>
+              </select>
+            </div>
+
+            <div class="col-md-4" style="text-align: right">
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+
           </div>
+
     </form>
   </div>
 </div>

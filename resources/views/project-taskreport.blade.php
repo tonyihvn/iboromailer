@@ -22,13 +22,12 @@
     <h4 class="card-title">New Task</h4>
   </div>
   <div class="card-body">
-    <form action="{{route('savemilestoneTask')}}" method="post">
+    <form action="{{route('savemilestoneTaskReport')}}" method="post">
           @csrf
 
-          <input type="hidden" name="project_id" value="{{isset($project_id) ? $project_id : ''}}">
           <input type="hidden" name="milestone_id" value="{{isset($milestone_id) ? $milestone_id : ''}}">
-          <input type="hidden" name="business_id" value="{{Auth()->user()->business_id}}">
-          <input type="hidden" name="category" value="Milestone Task">
+          <input type="hidden" name="business_id" val{{ue="{{Auth()->user()->business_id}}">
+          <input type="hidden" name="task_id" value="{{isset($task_id) ? $task_id : ''}}">
 
           <div class="form-group col-md-12">
             <label for="title">Subject</label>

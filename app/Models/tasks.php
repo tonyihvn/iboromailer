@@ -25,4 +25,9 @@ class tasks extends Model
     {
         return $this->belongsTo(project_milestones::class, 'id', 'milestone_id');
     }
+
+    public function reports()
+    {
+        return $this->hasMany(milestone_reports::class, 'id', 'task_id');
+    }
 }

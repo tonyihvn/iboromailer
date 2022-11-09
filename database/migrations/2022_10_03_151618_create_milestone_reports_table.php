@@ -17,6 +17,10 @@ class CreateMilestoneReportsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('milestone_id')->index();
             $table->foreign('milestone_id')->references('id')->on('project_milestones')->onDelete('cascade');
+
+            $table->unsignedBigInteger('task_id')->index();
+            $table->foreign('task_id')->references('id')->on('tasks')->onDelete('cascade');
+
             $table->string('subject',150)->nullable();
             $table->date('start_date')->nullable();
             $table->date('end_date',30)->nullable();

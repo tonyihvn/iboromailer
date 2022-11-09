@@ -23,6 +23,10 @@ class project_milestones extends Model
 
     public function tasks()
     {
-        return $this->hasMany(tasks::class, 'id', 'milestone_id');
+        return $this->hasMany(tasks::class, 'milestone_id', 'id');
+    }
+
+    public function assignedTo(){
+        return $this->belongsTo(User::class, 'assigned_to', 'id');
     }
 }

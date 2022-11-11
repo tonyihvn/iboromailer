@@ -38,9 +38,11 @@
 
           <div class="form-group col-md-12">
             <label for="details">Task Details</label>
-            <input type="text"
-              class="form-control" name="details" id="details" aria-describedby="Task Details" placeholder="Enter Task Details">
-            <small id="task_details" class="form-text text-muted">A Detailed infomation about the task being entered</small>
+            <textarea name="details" id="details" class="wyswygeditor">
+              Place <em>some</em> <u>text</u> <strong>here</strong>
+            </textarea>
+
+            <small id="task_details" class="form-text text-muted">A Detailed infomation about the report being entered</small>
           </div>
 
 

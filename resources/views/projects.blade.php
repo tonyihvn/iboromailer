@@ -20,9 +20,11 @@
 
 <div class="card">
   <div class="card-body">
-    <table class="table  responsive-table" id="products">
+    <a href="/addproject" class="btn btn-primary" style="float: right;">Add New</a>
+
+    <table class="table responsive-table" id="products">
         <thead>
-            <tr style="color: ">
+            <tr>
                 <th width="20">#</th>
                 <th>Project Title</th>
                 <th>Company Name</th>

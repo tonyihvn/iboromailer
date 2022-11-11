@@ -28,7 +28,7 @@ class HomeController extends Controller
 
     public function clients()
     {
-        $clients = User::where('category','Client')->get();
-        return view('clients')->with(['clients'=>$clients]);
+        $allclients = User::where('category','Client')->get();
+        return view('clients')->with(['allclients'=>$allclients]);
     }
 }

@@ -1,7 +1,7 @@
 @extends('layouts.template')
 
 @section('content')
-    @php $modal="material"; $pagename = "materials"; @endphp
+    @php $modal="material"; $pagetype = "Table"; @endphp
 
     <div class="content-header">
       <div class="container-fluid">
@@ -24,7 +24,7 @@
                   <a href="#" class="btn btn-primary pull-right" data-toggle="modal" data-target="#material">Add New</a>
                 </div>
                 <div class="panel-body">
-                    <table class="table responsive-table">
+                    <table class="table responsive-table" id="products">
                         <thead>
                             <tr style="color: ">
                                 <th>Image</th>
@@ -43,7 +43,7 @@
 
                                 <tr>
                                     <td width="10%">
-                                            <img src="/public/images/materials/{{$mat->picture}}" class="img-circle" alt="{{$settings->business_name}}" width="100%" height="auto">
+                                            <img src="/public/images/materials/{{$mat->picture}}" class="img-circle" alt="{{$business->business_name}}" width="100%" height="auto">
                                     </td>
                                     <td><a href="/material/{{$mat->id}}" target="_blank"><b>{{$mat->name}}</b></a></td>
                                     <td><b>{{$mat->type}}/{{$mat->category}}</b></td>
@@ -53,7 +53,7 @@
                                     <td>{{$mat->stock->quantity}}</td>
                                     <td>
 
-                                        <button class="label label-primary" id="ach{{$mat->id}}" onclick="material({{$mat->id}})"  data-toggle="modal" data-target="#material" data-name="{{$mat->name}}" data-type="{{$mat->type}}" data-category="{{$mat->category}}" data-measurement_unit="{{$mat->measurement_unit}}"  data-picture="{{$mat->picture}}"  data-size="{{$mat->size}}"  data-cost_per="{{$mat->cost_per}}"  data-setting_id="{{$mat->setting_id}}" }}">Edit</button>
+                                        <button class="label label-primary" id="ach{{$mat->id}}" onclick="material({{$mat->id}})"  data-toggle="modal" data-target="#material" data-name="{{$mat->name}}" data-type="{{$mat->type}}" data-category="{{$mat->category}}" data-measurement_unit="{{$mat->measurement_unit}}"  data-picture="{{$mat->picture}}"  data-size="{{$mat->size}}"  data-cost_per="{{$mat->cost_per}}"  data-business_id="{{$mat->business_id}}">Edit</button>
                                         <a href="/delete-mat/{{$mat->id}}" class="label label-danger"  onclick="return confirm('Are you sure you want to delete the material: {{$mat->name}}?')">Delete</a>
                                     </td>
 
@@ -69,104 +69,7 @@
                 </div>
             </div>
 
-            <div class="card-body">
-              <table id="example2" class="table table-bordered table-hover">
-                <thead>
-                <tr>
-                  <th>Image</th>
-                  <th>Name</th>
-                  <th>type/Category</th>
-                  <th>Size/Unit</th>
-                  <th>Cost Per</th>
-                  <th>Location</th>
-                  <th>Stock Bal.</th>
-                  <th>Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                  <td>Trident</td>
-                  <td>Internet
-                    Explorer 4.0
-                  </td>
-                  <td>Win 95+</td>
-                  <td> 4</td>
-                  <td>X</td>
-                  <td>Win 95+</td>
-                  <td> 4</td>
-                  <td>X</td>
-                </tr>
-                <tr>
-                  <td>Trident</td>
-                  <td>Internet
-                    Explorer 5.0
-                  </td>
-                  <td>Win 95+</td>
-                  <td>5</td>
-                  <td>C</td>
-                  <td>Win 95+</td>
-                  <td> 4</td>
-                  <td>X</td>
-                </tr>
-                <tr>
-                  <td>Trident</td>
-                  <td>Internet
-                    Explorer 5.5
-                  </td>
-                  <td>Win 95+</td>
-                  <td>5.5</td>
-                  <td>A</td>
-                  <td>Win 95+</td>
-                  <td> 4</td>
-                  <td>X</td>
-                </tr>
-                <tr>
-                  <td>Trident</td>
-                  <td>Internet
-                    Explorer 6
-                  </td>
-                  <td>Win 98+</td>
-                  <td>6</td>
-                  <td>A</td>
-                  <td>Win 95+</td>
-                  <td> 4</td>
-                  <td>X</td>
-                </tr>
-                <tr>
-                  <td>Trident</td>
-                  <td>Internet Explorer 7</td>
-                  <td>Win XP SP2+</td>
-                  <td>7</td>
-                  <td>A</td>
-                  <td>Win 95+</td>
-                  <td> 4</td>
-                  <td>X</td>
-                </tr>
-                <tr>
-                  <td>Other browsers</td>
-                  <td>All others</td>
-                  <td>-</td>
-                  <td>-</td>
-                  <td>U</td>
-                  <td>Win 95+</td>
-                  <td> 4</td>
-                  <td>X</td>
-                </tr>
-                </tbody>
-                <tfoot>
-                <tr>
-                  <th>Image</th>
-                  <th>Name</th>
-                  <th>type/Category</th>
-                  <th>Size/Unit</th>
-                  <th>Cost Per</th>
-                  <th>Location</th>
-                  <th>Stock Bal.</th>
-                  <th>Action</th>
-                </tr>
-                </tfoot>
-              </table>
-            </div>
+
     </div>
 
 
@@ -240,8 +143,8 @@
 
                     <div class="form-group col-md-6">
 
-                        <label for="setting_id" class="control-label">Facility / Location</label>
-                        <select class="form-control" name="setting_id" id="setting_id">
+                        <label for="business_id" class="control-label">Facility / Location</label>
+                        <select class="form-control" name="business_id" id="business_id">
                             <option value="1" selected>Select Location</option>
                             @foreach ($userbusinesses as $set)
                                 <option value="{{$set->id}}">{{$set->business_name}}</option>

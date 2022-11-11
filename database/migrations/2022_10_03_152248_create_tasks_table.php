@@ -27,6 +27,8 @@ class CreateTasksTable extends Migration
             $table->foreign('assigned_to')->references('id')->on('users')->onDelete('cascade');
             $table->string('category',30)->nullable();
             $table->double('estimated_cost',10,2)->nullable();
+            $table->double('actual_cost',10,2)->nullable();
+            $table->string('files',10,2)->nullable();
             $table->string('status',30)->nullable();
             $table->unsignedBigInteger('business_id')->index()->nullable();
             $table->foreign('business_id')->references('id')->on('businesses');

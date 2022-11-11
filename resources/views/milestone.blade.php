@@ -61,7 +61,7 @@
           @foreach ($milestone->tasks as $mt)
             <div class="list-group-item list-group-item-action"><a href="{{url('task/'.$mt->id)}}">{{$mt->subject}}</a> <span class="badge badge-pill badge-primary">{{$mt->status}}</span>
               <div class="btn-group" style="float: right;">
-                <a href="#" class="btn btn-xs btn-primary">View</a>
+                <a href="{{url('task/'.$mt->id)}}" class="btn btn-xs btn-primary">View</a>
                 <a href="#" class="btn btn-xs btn-success">Edit</a>
                 <a href="#" class="btn btn-xs btn-danger">Delete</a>
               </div>

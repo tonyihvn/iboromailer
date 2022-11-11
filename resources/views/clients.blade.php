@@ -21,25 +21,25 @@
 
 
 <div class="card">
+
   <div class="card-body">
-    @foreach ($clients as $cl)
-        {{$cl->phone_number}}
-    @endforeach
-    <table class="table  responsive-table" id="products">
+    <a href="{{url('addclient')}}" class="btn btn-primary" style="float: right;">Add New</a>
+<br><br><br>
+    <table class="table responsive-table" id="products">
         <thead>
-            <tr style="color: ">
+            <tr>
                 <th width="20">#</th>
                 <th>Company Name</th>
                 <th>Location</th>
                 <th>Contact Person</th>
                 <th>Phone Number</th>
                 <th>Jobs Done</th>
-                <th>Current Project</th>
+                <th>Ongoing Project</th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($clients as $cl)
+            @foreach ($allclients as $cl)
 
                 <tr
                     @if ($cl->status=="Active")
@@ -53,7 +53,7 @@
                     <td>{{$cl->phone_number}}</td>
 
                     <td>{{$cl->projects->count()}}</td>
-                    <td></td>
+                    <td>{{isset($cl->projects) && $cl->projects->count()>0 ? $cl->projects->where('status','Ongoing')->first()->title : "None"}}</td>
                     <td width="90">
                         <div class="btn-group">
                             <a href="/client-projects/{{$cl->id}}" class="btn btn-small label-primary left">Client Projects<i class="lnr lnr-list"></i></a>

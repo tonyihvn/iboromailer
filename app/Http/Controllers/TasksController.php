@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\tasks;
+use App\Models\materials;
 use App\Http\Requests\StoretasksRequest;
 use App\Http\Requests\UpdatetasksRequest;
+use Illuminate\Http\Request;
 
 class TasksController extends Controller
 {
@@ -15,7 +17,7 @@ class TasksController extends Controller
      */
     public function index()
     {
-        return view('task');
+        return view('tasks');
     }
 
     /**
@@ -27,6 +29,28 @@ class TasksController extends Controller
     {
         return view('project-task')->with(['cid'=>$cid]);
 
+    }
+
+    public function viewTask($tid)
+    {
+        $task = tasks::where('id',$tid)->first();
+        $materials = materials::select('id','name','measurement_unit')->get();
+        return view('task')->with(['task'=>$task,'materials'=>$materials]);
+
+    }
+
+    public function addWorkers(Request $request)
+    {
+        foreach($request->worker as $key=>$staff){
+
+            task_workers::create([
+                'staff_id'=>$request->staff,
+                'amount_paid' => $request->amountpaid[$key],
+                'dated' => $request->dated,
+                'task_id'=>$request->task_id
+            ]);
+            return view('task')->with(['task'=>$task,'materials'=>$materials]);
+        }
     }
 
     /**

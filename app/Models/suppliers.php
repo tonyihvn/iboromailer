@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class materials extends Model
+class suppliers extends Model
 {
     use HasFactory;
 
@@ -14,10 +14,5 @@ class materials extends Model
     public function business()
     {
         return $this->belongsTo(businesses::class, 'business_id', 'id');
-    }
-
-    public function stock()
-    {
-        return $this->hasOne(material_stock::class, 'material_id', 'id');
     }
 }

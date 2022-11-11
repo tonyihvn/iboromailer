@@ -94,7 +94,10 @@ class ProjectMilestonesController extends Controller
     }
 
     public function saveMilestoneTask(Request $request){
-        tasks::create($request->all());
+        $savedTask = tasks::create($request->all());
+        $savedTask->category='Project Task';
+        $savedTask->save();
+
         $message = "Milestone Task added successfully";
         return redirect()->route('milestone',$request->milestone_id)->with(['message'=>$message]);
     }

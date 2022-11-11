@@ -18,16 +18,21 @@ class tasks extends Model
 
     public function project()
     {
-        return $this->belongsTo(projects::class, 'id', 'project_id');
+        return $this->belongsTo(projects::class, 'project_id', 'id');
     }
 
     public function milestone()
     {
-        return $this->belongsTo(project_milestones::class, 'id', 'milestone_id');
+        return $this->belongsTo(project_milestones::class, 'milestone_id', 'id');
     }
 
     public function reports()
     {
-        return $this->hasMany(milestone_reports::class, 'id', 'task_id');
+        return $this->hasMany(milestone_reports::class, 'task_id', 'id');
+    }
+
+    public function assignedTo()
+    {
+        return $this->belongsTo(User::class, 'assigned_to', 'id');
     }
 }

@@ -4,6 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Realty Plus | Dashboard</title>
+  <link rel="stylesheet" href="{{asset('plugins/select2/css/select2.min.css')}}">
+  <link rel="stylesheet" href="{{asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -22,8 +24,6 @@
   <!-- overlayScrollbars -->
   <link rel="stylesheet" href="{{asset('plugins/overlayScrollbars/css/OverlayScrollbars.min.css')}}">
   <!-- Daterange picker -->
-  <link rel="stylesheet" href="{{asset('plugins/select2/css/select2.min.css')}}">
-  <link rel="stylesheet" href="{{asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
 
   <link rel="stylesheet" href="{{asset('plugins/daterangepicker/daterangepicker.css')}}">
   <!-- summernote -->
@@ -456,16 +456,73 @@
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{asset('dist/js/pages/dashboard.js')}}"></script>
 <script src="{{asset('plugins/select2/js/select2.full.min.js')}}"></script>
-
 <script>
 
-  //Date picker
+$(function () {
+    // On Page Load
+
+    //Date picker
   $('.date').datetimepicker({
        format: 'YYYY-MM-DD'
    });
 
 
-   $('.select2').select2()
+   $('.select2').select2();
+
+   $('.wyswygeditor').summernote()
+
+  });
+
+  function material(accid){
+
+    var name = $('#ach'+accid).attr("data-name");
+    var type = $('#ach'+accid).attr("data-type");
+    var measurement_unit = $('#ach'+accid).attr("data-measurement_unit");
+    var size = $('#ach'+accid).attr("data-size");
+    var picture = $('#ach'+accid).attr("data-picture");
+
+    var cost_per = $('#ach'+accid).attr("data-cost_per");
+    var business_id = $('#ach'+accid).attr("data-business_id");
+    var category = $('#ach'+accid).attr("data-category");
+
+    $('#id').val(accid);
+    $('#name').val(name);
+    $('#type').val(type).attr("selected", "selected");
+    $('#measurement_unit').val(measurement_unit);
+    $('#size').val(size);
+
+
+
+    $('#cost_per').val(cost_per);
+    $('#oldpicture').val(picture);
+    $('#category').val(category).attr("selected", "selected");
+    $('#business_id').val(business_id).attr("selected", "selected");
+    $('#matbutton').html("Update Material");
+
+  }
+
+  function supplier(accid){
+
+    var supplier_name = $('#ach'+accid).attr("data-supplier_name");
+    var company_name = $('#ach'+accid).attr("data-company_name");
+    var phone_number = $('#ach'+accid).attr("data-phone_number");
+    var details = $('#ach'+accid).attr("data-details");
+    var address = $('#ach'+accid).attr("data-address");
+    var business_id = $('#ach'+accid).attr("data-business_id");
+    var category = $('#ach'+accid).attr("data-category");
+
+    $('#id').val(accid);
+    $('#company_name').val(company_name);
+    $('#supplier_name').val(supplier_name);
+    $('#phone_number').val(phone_number);
+    $('#details').val(details);
+    $('#address').val(address);
+    $('#category').val(category).attr("selected", "selected").change();
+    $('#business_id').val(business_id).attr("selected", "selected").change();
+    $('#supbutton').html("Update Supplier");
+
+  }
+
 
 </script>
 

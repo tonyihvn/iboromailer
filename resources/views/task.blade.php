@@ -21,8 +21,13 @@
   <!-- Add the bg color to the header using any of the bg-* classes -->
   <div class="widget-header" style="padding: 10px;">
     <h1>{{$task->subject}}</h1>
+
+    @isset($task->milestone_id)
+      <h5><i>As part of Milestone: </i>{{$task->milestone->title}}</h5>
+    @endisset
+
     @isset($task->project_id)
-      <h3>{{$task->project->title}}, {{$task->project->client->name}}</h3>
+      <h5><i>Project Name: </i>{{$task->project->title}}, <i>Client: </i>{{$task->project->client->name}}</h5>
     @endisset
     Status: <span class="badge badge-pill badge-primary">{{$task->status}}</span>
     <hr>
@@ -30,7 +35,7 @@
   <div class="card-body">
     <div class="row">
       <div class="col-md-6">
-        {{$task->details}}
+        {!!$task->details!!}
       </div>
       <div class="col-md-6">
 
@@ -71,6 +76,76 @@
     </div>
   </div>
 </div>
+
+<div class="row">
+  <div class="col-md-6">
+    <div class=" card card-primary card-outline">
+      <div class="widget-heading">Add Workers</div>
+      <form action="{{route('addWorkers')}}">
+        <input type="hidden" name="task_id" value="{{$task->id}}">
+        <table class="card-body table  responsive-table" id="products">
+          <thead>
+              <tr style="color: ">
+                  <th>Select</th>
+                  <th>Name</th>
+                  <th>Phone Number</th>
+                  <th>Amount Paid</th>
+              </tr>
+          </thead>
+          <tbody>
+              @foreach ($staff as $wk)
+
+                  <tr>
+                      <td><input type="checkbox" name="worker[]" value="{{$wk->id}}"></td>
+                      <td>{{$wk->name}}</td>
+                      <td>{{$wk->phone_number}}</td>
+                      <td><input type="number" name="amountpaid[]" step="0.01"></td>
+                  </tr>
+              @endforeach
+
+          </tbody>
+        </table>
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="card card-primary card-outline">
+      <div class="widget-heading">Add Materials Used</div>
+      <form action="{{route('addMaterialsUsed')}}">
+        <input type="hidden" name="task_id" value="{{$task->id}}">
+        <table class="card-body table  responsive-table" id="products">
+          <thead>
+              <tr style="color: ">
+                  <th>Select</th>
+                  <th>Material Name</th>
+                  <th>Unit of Measurement</th>
+                  <th>Quantity Used</th>
+              </tr>
+          </thead>
+          <tbody>
+              @foreach ($materials as $mt)
+
+                  <tr>
+                      <td><input type="checkbox" name="materialname[]" value="{{$mt->id}}"></td>
+                      <td>{{$mt->name}}</td>
+                      <td>{{$mt->measurement_unit}}</td>
+                      <td><input type="number" name="quantityused[]" step="0.01"></td>
+                  </tr>
+              @endforeach
+          </tbody>
+        </table>
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 
 
 

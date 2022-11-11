@@ -35,10 +35,12 @@
           </div>
 
           <div class="form-group col-md-12">
-            <label for="details">Milestone Details</label>
-            <input type="text"
-              class="form-control" name="details" id="details" aria-describedby="Milestone Details" placeholder="Enter Milestone Details">
-            <small id="Milestone_details" class="form-text text-muted">A Detailed infomation about the milestone being entered</small>
+            <label for="details">Task Details</label>
+            <textarea name="details" id="details" class="wyswygeditor">
+              Place <em>some</em> <u>text</u> <strong>here</strong>
+            </textarea>
+
+            <small id="task_details" class="form-text text-muted">A Detailed infomation about the milestone being entered</small>
           </div>
 
           <div class="form-group row">

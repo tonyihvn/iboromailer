@@ -48,8 +48,12 @@ Route::post('savemilestoneTask', [App\Http\Controllers\ProjectMilestonesControll
 
 
 //TASK
-Route::get('task', [App\Http\Controllers\TasksController::class, 'index'])->name('task');
-Route::get('project-task/{cid}', [App\Http\Controllers\TasksController::class, 'create'])->name('project-task');
+Route::get('tasks', [App\Http\Controllers\TasksController::class, 'index'])->name('tasks');
+Route::get('project-task/{tid}', [App\Http\Controllers\TasksController::class, 'create'])->name('project-task');
+Route::get('task/{tid}', [App\Http\Controllers\TasksController::class, 'viewTask'])->name('task');
+Route::post('addWorkers', [App\Http\Controllers\TasksController::class, 'addWorkers'])->name('addWorkers');
+Route::post('addMaterialsUsed', [App\Http\Controllers\TasksController::class, 'addMaterialsUsed'])->name('addMaterialsUsed');
+
 
 //REPORT
 Route::get('milestone-report/{cid}', [App\Http\Controllers\MilestoneReportController::class, 'create'])->name('milestone-report');
@@ -60,3 +64,15 @@ Route::get('/materials', [App\Http\Controllers\MaterialsController::class, 'inde
 Route::post('/addmaterial', [App\Http\Controllers\MaterialsController::class, 'store'])->name('addmaterial')->middleware('role:Admin,Super,Staff');
 Route::get('/material/{id}', [App\Http\Controllers\MaterialsController::class, 'material'])->name('material');
 Route::get('/delete-mat/{id}', [App\Http\Controllers\MaterialsController::class, 'destroy'])->name('delete-mat')->middleware('role:Admin,Super,Staff');
+
+// SUPPLIERS
+Route::get('/suppliers', [App\Http\Controllers\SuppliersController::class, 'index'])->name('suppliers')->middleware('role:Admin,Super,Staff');
+Route::post('/addsupplier', [App\Http\Controllers\SuppliersController::class, 'store'])->name('addsupplier')->middleware('role:Admin,Super,Staff');
+Route::get('/supplier/{id}', [App\Http\Controllers\SuppliersController::class, 'supplier'])->name('supplier');
+Route::get('/delete-sup/{id}', [App\Http\Controllers\SuppliersController::class, 'destroy'])->name('delete-sup')->middleware('role:Admin,Super,Staff');
+
+// SUPPLIES
+Route::get('/supplies', [App\Http\Controllers\MaterialSuppliesController::class, 'index'])->name('supplies')->middleware('role:Admin,Super,Staff');
+Route::post('/addsupply', [App\Http\Controllers\MaterialSuppliesController::class, 'store'])->name('addsupply')->middleware('role:Admin,Super,Staff');
+Route::get('/supply/{id}', [App\Http\Controllers\MaterialSuppliesController::class, 'supply'])->name('supply');
+Route::get('/delete-sp/{id}', [App\Http\Controllers\MaterialSuppliesController::class, 'destroy'])->name('delete-sp')->middleware('role:Admin,Super,Staff');

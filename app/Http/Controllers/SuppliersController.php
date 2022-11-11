@@ -62,7 +62,6 @@ class SuppliersController extends Controller
             'details' => $request->details,
             'address'=>$request->address,
             'business_id'=>$request->business_id
-
         ]);
         $suppliers = suppliers::paginate(50);
 

@@ -21,6 +21,25 @@ class businesses extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
+    public function materials()
+    {
+        return $this->hasMany(materials::class, 'business_id', 'id');
+    }
+
+    public function suppliers()
+    {
+        return $this->hasMany(suppliers::class, 'business_id', 'id');
+    }
+
+    public function personnel()
+    {
+        return $this->hasMany(User::class, 'business_id', 'id');
+    }
+
+
+
+
+
 
 
 }

@@ -1,10 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\material_supplies;
-use App\Http\Requests\Storematerial_suppliesRequest;
-use App\Http\Requests\Updatematerial_suppliesRequest;
+
+use App\Models\material_stock;
+use Illuminate\Http\Request;
+
 
 class MaterialSuppliesController extends Controller
 {
@@ -15,7 +16,8 @@ class MaterialSuppliesController extends Controller
      */
     public function index()
     {
-        //
+        $supplies = material_supplies::paginate(50);
+        return view('supplies', compact('supplies'));
     }
 
     /**
@@ -31,12 +33,40 @@ class MaterialSuppliesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\Storematerial_suppliesRequest  $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Storematerial_suppliesRequest $request)
+    public function store(Request $request)
     {
-        //
+
+
+        material_supplies::updateOrCreate(['id'=>$request->id],[
+            'material_id' => $request->material_id,
+            'supplier_id' => $request->supplier_id,
+            'quantity' => $request->quantity,
+            'cost_per' => $request->cost_per,
+            'total_amount' => $request->total_amount,
+            'date_supplied' => $request->date_supplied,
+            'business_id'=>$request->business_id,
+            'batchno'=>$request->batchno,
+            'comfirmed_by'=>$request->comfirmed_by
+
+        ]);
+
+        // Update Stock
+        $stockid = material_stock::updateOrCreate(['material_id'=>$request->material_id],[
+            'material_id'=>$request->material_id,
+            'dated_added'=>$request->date_supplied,
+            'business_id'=>$request->business_id
+
+        ]);
+
+        if($request->updating=="Yes"){
+            $stockid->increment('quantity',$request->quantity);
+        }
+        $supplies = material_supplies::paginate(50);
+
+        return view('supplies', compact('supplies'));
     }
 
     /**
@@ -64,11 +94,11 @@ class MaterialSuppliesController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\Updatematerial_suppliesRequest  $request
+     * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\material_supplies  $material_supplies
      * @return \Illuminate\Http\Response
      */
-    public function update(Updatematerial_suppliesRequest $request, material_supplies $material_supplies)
+    public function update(Request $request, material_supplies $material_supplies)
     {
         //
     }
@@ -79,8 +109,10 @@ class MaterialSuppliesController extends Controller
      * @param  \App\Models\material_supplies  $material_supplies
      * @return \Illuminate\Http\Response
      */
-    public function destroy(material_supplies $material_supplies)
+    public function destroy($id)
     {
-        //
+        material_supplies::findOrFail($id)->delete();
+        $message = 'The Supply record has been deleted!';
+        return redirect()->route('supplies')->with(['message'=>$message]);
     }
 }

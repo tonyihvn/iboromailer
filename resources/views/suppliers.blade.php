@@ -77,7 +77,7 @@
 
   <!-- The Modal -->
   <div class="modal" id="supplier">
-    <div class="modal-dialog"  style="width: 90%">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content">
 
         <!-- Modal Header -->

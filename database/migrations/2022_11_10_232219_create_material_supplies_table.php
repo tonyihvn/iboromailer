@@ -28,6 +28,9 @@ class CreateMaterialSuppliesTable extends Migration
 
             $table->string('batchno',30)->nullable();
 
+            $table->unsignedBigInteger('comfirmed_by')->nullable();
+            $table->foreign('comfirmed_by')->references('id')->on('users')->onDelete('cascade');
+
             $table->unsignedBigInteger('business_id')->index()->nullable();
             $table->foreign('business_id')->references('id')->on('businesses');
             $table->timestamps();

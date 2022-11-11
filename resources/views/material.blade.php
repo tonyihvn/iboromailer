@@ -51,7 +51,7 @@
                                 <tr>
                                     <td>{{$msu->supplier->supplier_name}} / {{$msu->supplier->company_name}}</td>
                                     <td>{{$msu->batchno}}</td>
-                                    <td><b>{{$msu->confirmedby->name}}</b></td>
+                                    <td><b>{{$msu->comfirmedby->name}}</b></td>
                                     <td>{{$msu->quantity}}</td>
                                     <td>{{$msu->cost_per}}</td>
                                     <td>{{$msu->total_amount}}</td>

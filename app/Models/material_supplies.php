@@ -15,4 +15,20 @@ class material_supplies extends Model
     {
         return $this->belongsTo(businesses::class, 'business_id', 'id');
     }
+
+
+    public function supplier()
+    {
+        return $this->hasOne(suppliers::class, 'id', 'supplier_id');
+    }
+
+    public function material()
+    {
+        return $this->hasOne(materials::class, 'id', 'material_id');
+    }
+
+    public function comfirmedby()
+    {
+        return $this->hasOne(User::class, 'id', 'comfirmed_by');
+    }
 }

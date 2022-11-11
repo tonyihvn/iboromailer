@@ -7,6 +7,7 @@ use App\Models\materials;
 use App\Http\Requests\StoretasksRequest;
 use App\Http\Requests\UpdatetasksRequest;
 use Illuminate\Http\Request;
+use App\Models\task_workers;
 
 class TasksController extends Controller
 {
@@ -39,19 +40,32 @@ class TasksController extends Controller
 
     }
 
+    public function change_task_status(Request $request)
+    {
+        $task = tasks::where('id',$request->task_id)->first();
+        $task->status=$request->change_status;
+        $task->save();
+
+        $message = "Task Status Changed to ".$request->change_status;
+
+        return redirect()->back()->with(['message'=>$message]);
+
+    }
+
     public function addWorkers(Request $request)
     {
-        foreach($request->worker as $key=>$staff){
-
+        foreach($request->worker as $key=>$worker_id){
             task_workers::create([
-                'staff_id'=>$request->staff,
+                'worker_id'=>$worker_id,
                 'amount_paid' => $request->amountpaid[$key],
-                'dated' => $request->dated,
+                'work_date' => $request->work_date,
                 'task_id'=>$request->task_id
             ]);
-            return view('task')->with(['task'=>$task,'materials'=>$materials]);
+            $message = "Workers added to the task";
         }
+        return redirect()->back()->with(['message'=>$message]);
     }
+
 
     /**
      * Store a newly created resource in storage.

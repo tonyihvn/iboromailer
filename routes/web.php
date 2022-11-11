@@ -53,6 +53,7 @@ Route::get('project-task/{tid}', [App\Http\Controllers\TasksController::class, '
 Route::get('task/{tid}', [App\Http\Controllers\TasksController::class, 'viewTask'])->name('task');
 Route::post('addWorkers', [App\Http\Controllers\TasksController::class, 'addWorkers'])->name('addWorkers');
 Route::post('addMaterialsUsed', [App\Http\Controllers\TasksController::class, 'addMaterialsUsed'])->name('addMaterialsUsed');
+Route::post('change_task_status', [App\Http\Controllers\TasksController::class, 'change_task_status'])->name('change_task_status');
 
 
 //REPORT

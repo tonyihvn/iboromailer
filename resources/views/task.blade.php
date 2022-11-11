@@ -25,11 +25,32 @@
     @isset($task->milestone_id)
       <h5><i>As part of Milestone: </i>{{$task->milestone->title}}</h5>
     @endisset
-
     @isset($task->project_id)
       <h5><i>Project Name: </i>{{$task->project->title}}, <i>Client: </i>{{$task->project->client->name}}</h5>
     @endisset
-    Status: <span class="badge badge-pill badge-primary">{{$task->status}}</span>
+    <div class="row">
+      <div class="col-md-2">
+        Status: <span class="badge badge-pill badge-primary">{{$task->status}}</span>
+      </div>
+
+
+
+      <div class="col-md-2">
+        <form action="{{route('change_task_status')}}" method="POST">
+          @csrf
+          <input type="hidden" name="task_id" value="{{$task->id}}">
+          <select name="change_status" id="change_status" class="form-control" onchange="this.form.submit()">
+            <option value="" selected>Change Status</option>
+            <option value="Completed">Completed</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Paused">Paused</option>
+            <option value="Terminated">Terminated</option>
+          </select>
+        </form>
+      </div>
+    </div>
+
+
     <hr>
   </div>
   <div class="card-body">
@@ -79,10 +100,22 @@
 
 <div class="row">
   <div class="col-md-6">
-    <div class=" card card-primary card-outline">
+    <div class=" card card-primary card-outline" style="padding: 10px !important;">
       <div class="widget-heading">Add Workers</div>
-      <form action="{{route('addWorkers')}}">
+      <form action="{{route('addWorkers')}}" method="POST">
+        @csrf
         <input type="hidden" name="task_id" value="{{$task->id}}">
+
+        <div style="float: right;">
+          <label>Date Work Done:</label>
+            <div class="input-group date" id="start_date_activator" data-target-input="nearest">
+                <input type="text" name="work_date" class="form-control datetimepicker-input" data-target="#start_date_activator">
+                <div class="input-group-append" data-target="#start_date_activator" data-toggle="datetimepicker">
+                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                </div>
+            </div>
+        </div>
+
         <table class="card-body table  responsive-table" id="products">
           <thead>
               <tr style="color: ">
@@ -113,10 +146,21 @@
   </div>
 
   <div class="col-md-6">
-    <div class="card card-primary card-outline">
+    <div class="card card-primary card-outline" style="padding: 10px !important;">
       <div class="widget-heading">Add Materials Used</div>
       <form action="{{route('addMaterialsUsed')}}">
         <input type="hidden" name="task_id" value="{{$task->id}}">
+
+        <div style="float: right;">
+          <label>Material Checkout Date:</label>
+            <div class="input-group date" id="end_date_activator" data-target-input="nearest">
+                <input type="text" name="dated" class="form-control datetimepicker-input" data-target="#end_date_activator">
+                <div class="input-group-append" data-target="#end_date_activator" data-toggle="datetimepicker">
+                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                </div>
+            </div>
+        </div>
+
         <table class="card-body table  responsive-table" id="products">
           <thead>
               <tr style="color: ">
@@ -138,9 +182,36 @@
               @endforeach
           </tbody>
         </table>
-        <div class="form-group">
-          <button type="submit" class="btn btn-primary">Save</button>
+
+        <div class="row">
+
+          <div class="form-group col-md-4">
+
+            <label for="checkout_by" class="control-label">Checked Out By</label>
+            <select class="form-control" name="checkout_by" id="checkout_by">
+              @foreach ($business->personnel as $usr)
+                  <option value="{{$usr->id}}">{{$usr->name}}</option>
+              @endforeach
+
+            </select>
         </div>
+
+        <div class="form-group col-md-4">
+            <label for="approved_by">Approved By</label>
+            <select class="form-control" name="approved_by" id="approved_by">
+                @foreach ($business->personnel as $usr)
+                    <option value="{{$usr->id}}">{{$usr->name}}</option>
+                @endforeach
+
+            </select>
+        </div>
+        <div class="form-group col-md-4">
+          <label for="">Confirm and Save</label>
+          <button type="submit" class="btn btn-primary form-control">Save</button>
+        </div>
+
+        </div>
+
       </form>
     </div>
   </div>

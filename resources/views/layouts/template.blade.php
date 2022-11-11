@@ -30,7 +30,6 @@
   <link rel="stylesheet" href="{{asset('plugins/summernote/summernote-bs4.min.css')}}">
   <link rel="stylesheet" href="{{asset('/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
 
-
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">

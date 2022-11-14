@@ -35,4 +35,14 @@ class tasks extends Model
     {
         return $this->belongsTo(User::class, 'assigned_to', 'id');
     }
+
+    public function workers()
+    {
+        return $this->hasMany(task_workers::class, 'task_id', 'id');
+    }
+
+    public function materialsUsed()
+    {
+        return $this->hasMany(material_checkouts::class, 'task_id', 'id');
+    }
 }

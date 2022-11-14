@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\project_files;
 use App\Http\Requests\Storeproject_filesRequest;
 use App\Http\Requests\Updateproject_filesRequest;
+use Illuminate\Http\Request;
+
 
 class ProjectFilesController extends Controller
 {
@@ -15,7 +17,7 @@ class ProjectFilesController extends Controller
      */
     public function index()
     {
-        //
+        // return view('add-files');
     }
 
     /**
@@ -25,7 +27,8 @@ class ProjectFilesController extends Controller
      */
     public function create()
     {
-        //
+        return view('add-files');
+
     }
 
     /**
@@ -34,9 +37,35 @@ class ProjectFilesController extends Controller
      * @param  \App\Http\Requests\Storeproject_filesRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Storeproject_filesRequest $request)
+    public function store(Request $request)
     {
-        //
+
+        $validateData = $request->validate([
+            'picture'=>'image|mimes:jpg,png,jpeg,gif,svg,doc,docx,pdf,xls,xlsx'
+        ]);
+
+        if(!empty($request->file('file_name'))){
+            // $picture = $request->file('picture')->getClientOriginalName();
+            $file_name = time().'.'.$request->file_name->extension();
+            // $path = $request->file('picture')->store('public/images');
+
+            $request->file_name->move(\public_path('files/'.$request->project_id),$file_name);
+        }else{
+                $file_name = "";
+        }
+
+        project_files::create([
+            'project_id'=>$request->project_id,
+            'milestone_id'=>$request->milestone_id,
+            'task_id'=>$request->task_id,
+            'file_name'=>$file_name,
+            'file_title'=>$request->file_title,
+            'details'=>$request->details,
+            'cloud_location'=>$request->cloud_location,
+            'business_id'=>$request->business_id
+        ]);
+        $message = "Project File(s) uploaded successfully";
+        return redirect()->back()->with(['message'=>$message]);
     }
 
     /**
@@ -48,6 +77,12 @@ class ProjectFilesController extends Controller
     public function show(project_files $project_files)
     {
         //
+    }
+
+    public function file($fid)
+    {
+        $file = project_files::where('id',$fid)->first();
+        return view('file')->with(['file'=>$file]);
     }
 
     /**

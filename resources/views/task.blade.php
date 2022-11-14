@@ -84,7 +84,7 @@
           <a href="{{url('new-task-report/'.$task->id)}}" class="list-group-item list-group-item-action active">Tasks Reports <span class="btn btn-default"  style="float: right;">Add New</span></a>
 
           @foreach ($task->reports as $tr)
-            <div class="list-group-item list-group-item-action"><a href="{{url('task-report/'.$tr->id)}}">{{$tr->title}}</a>
+            <div class="list-group-item list-group-item-action"><a href="{{url('task-report/'.$tr->id)}}">{{$tr->subject}}</a>
               <div class="btn-group" style="float: right;">
                 <a href="#" class="btn btn-xs btn-primary">View</a>
                 <a href="#" class="btn btn-xs btn-success">Edit</a>
@@ -102,6 +102,7 @@
   <div class="col-md-6">
     <div class=" card card-primary card-outline" style="padding: 10px !important;">
       <div class="widget-heading">Add Workers</div>
+      <hr>
       <form action="{{route('addWorkers')}}" method="POST">
         @csrf
         <input type="hidden" name="task_id" value="{{$task->id}}">
@@ -148,7 +149,9 @@
   <div class="col-md-6">
     <div class="card card-primary card-outline" style="padding: 10px !important;">
       <div class="widget-heading">Add Materials Used</div>
-      <form action="{{route('addMaterialsUsed')}}">
+      <hr>
+      <form action="{{route('addMaterialsUsed')}}" method="POST">
+        @csrf
         <input type="hidden" name="task_id" value="{{$task->id}}">
 
         <div style="float: right;">
@@ -213,6 +216,65 @@
         </div>
 
       </form>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-6 card">
+    <div class="card-body">
+      <h4 class="card-title">WORKERS AND PAYMENTS</h4>
+      <hr>
+      <table class="table responsive-table">
+        <thead>
+            <tr style="color: ">
+                <th>Name</th>
+                <th>Job Date</th>
+
+                <th>Amount Paid(<s>N</s>)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($task->workers as $twkrs)
+
+                <tr>
+                    <td>{{$twkrs->worker->name}}</td>
+                    <td>{{$twkrs->work_date}}</td>
+                    <td>{{$twkrs->amount_paid}}</td>
+                </tr>
+            @endforeach
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="col-md-6 card">
+    <div class="card-body">
+      <h4 class="card-title">MATERIALS USED</h4>
+      <hr>
+      <table class="table responsive-table">
+        <thead>
+            <tr style="color: ">
+                <th>Item Name</th>
+                <th>Date Taken</th>
+                <th>Checked out By</th>
+                <th>Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($task->materialsUsed as $tmt)
+
+                <tr>
+                    <td>{{$tmt->material->name}}</td>
+                    <td>{{$tmt->dated}}</td>
+                    <td>{{$tmt->checkoutby->name}}</td>
+                    <td>{{$tmt->quantity}}</td>
+                </tr>
+            @endforeach
+
+        </tbody>
+      </table>
     </div>
   </div>
 </div>

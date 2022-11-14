@@ -35,7 +35,7 @@
                 <th>Phone Number</th>
                 <th>Jobs Done</th>
                 <th>Ongoing Project</th>
-                <th>Action</th>
+                <th>Projects</th>
             </tr>
         </thead>
         <tbody>
@@ -56,9 +56,9 @@
                     <td>{{isset($cl->projects) && $cl->projects->count()>0 ? $cl->projects->where('status','Ongoing')->first()->title : "None"}}</td>
                     <td width="90">
                         <div class="btn-group">
-                            <a href="/client-projects/{{$cl->id}}" class="btn btn-small label-primary left">Client Projects<i class="lnr lnr-list"></i></a>
+                            <a href="/client-projects/{{$cl->id}}" class="btn btn-success btn-xs">Projects<i class="lnr lnr-list"></i></a>
 
-                            <a href="/new-project/{{$cl->id}}/" class="btn btn-small label-success">New Project<i class="lnr lnr-plus"></i></a>
+                            <a href="/new-project/{{$cl->id}}/" class="btn btn-primary btn-xs">New<i class="lnr lnr-plus"></i></a>
                         </div>
                     </td>
 

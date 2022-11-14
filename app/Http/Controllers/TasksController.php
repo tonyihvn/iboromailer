@@ -61,8 +61,10 @@ class TasksController extends Controller
                 'work_date' => $request->work_date,
                 'task_id'=>$request->task_id
             ]);
-            $message = "Workers added to the task";
+
         }
+
+        $message = "Workers added to the task";
         return redirect()->back()->with(['message'=>$message]);
     }
 

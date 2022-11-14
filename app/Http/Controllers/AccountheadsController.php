@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\categories;
+use App\Models\accountheads;
 use Illuminate\Http\Request;
 
-class CategoriesController extends Controller
+class AccountheadsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,9 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        $categories = categories::paginate(50);
-        return view('categories', compact('categories'));
+        $accountheads = accountheads::all();
+
+        return view('account-heads', compact('accountheads'));
     }
 
     /**
@@ -25,7 +26,7 @@ class CategoriesController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -36,38 +37,39 @@ class CategoriesController extends Controller
      */
     public function store(Request $request)
     {
-        categories::updateOrCreate(['id'=>$request->id],[
-            'title'=>$request->title,
-            'group_name'=>$request->category_group,
+
+        accountheads::updateOrCreate(['id'=>$request->id],[
+            'title' => $request->title,
+            'category' => $request->category,
+            'type' => $request->type,
             'description'=>$request->description,
             'business_id'=>Auth()->user()->business_id
-
         ]);
+        $accountheads = accountheads::all();
 
-        $categories = categories::paginate(50);
-        $message = 'The Category has been created!';
+        return view('account-heads', compact('accountheads'));
 
-        return view('categories', compact('categories','message'));
     }
+
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\categories  $categories
+     * @param  \App\Models\accountheads  $accountheads
      * @return \Illuminate\Http\Response
      */
-    public function show(categories $categories)
+    public function show(accountheads $accountheads)
     {
-        //
+
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\categories  $categories
+     * @param  \App\Models\accountheads  $accountheads
      * @return \Illuminate\Http\Response
      */
-    public function edit(categories $categories)
+    public function edit(accountheads $accountheads)
     {
         //
     }
@@ -76,10 +78,10 @@ class CategoriesController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\categories  $categories
+     * @param  \App\Models\accountheads  $accountheads
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, categories $categories)
+    public function update(Request $request, accountheads $accountheads)
     {
         //
     }
@@ -87,13 +89,16 @@ class CategoriesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\categories  $categories
+     * @param  \App\Models\accountheads  $accountheads
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        categories::findOrFail($id)->delete();
-        $message = 'The Category has been deleted!';
-        return redirect()->route('categories')->with(['message'=>$message]);
+
+      accountheads::findOrFail($id)->delete();
+      $message = 'The Account Head has been deleted!';
+      return redirect()->route('account-heads')->with(['message'=>$message]);
+
+
     }
 }

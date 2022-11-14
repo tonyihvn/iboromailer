@@ -36,10 +36,18 @@ class businesses extends Model
         return $this->hasMany(User::class, 'business_id', 'id');
     }
 
+    public function projects()
+    {
+        return $this->hasMany(projects::class, 'business_id', 'id');
+    }
 
+    public function milestones()
+    {
+        return $this->hasMany(project_milestones::class, 'business_id', 'id');
+    }
 
-
-
-
-
+    public function tasks()
+    {
+        return $this->hasMany(tasks::class, 'business_id', 'id');
+    }
 }

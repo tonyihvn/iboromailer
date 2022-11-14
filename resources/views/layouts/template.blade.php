@@ -522,6 +522,106 @@ $(function () {
 
   }
 
+  function materialcheckout(accid){
+
+    $("#forcheckout").show();
+
+    $("#materiallist").hide();
+
+    var material_name = $('#ach'+accid).attr("data-material_name");
+
+    $("#material_named").text(material_name).change();
+
+    $("#quantity").attr('type','number').change();
+
+    var checkout_by = $('#ach'+accid).attr("data-checkout_by");
+    var approved_by = $('#ach'+accid).attr("data-approved_by");
+    var task_id = $('#ach'+accid).attr("data-task_id");
+
+    var material_id = $('#ach'+accid).attr("data-material_id");
+    var quantity = $('#ach'+accid).attr("data-quantity");
+    var business_id = $('#ach'+accid).attr("data-business_id");
+    var dated = $('#ach'+accid).attr("data-dated");
+    var details = $('#ach'+accid).attr("data-details");
+
+    var date_supplied = $('#ach'+accid).attr("data-date_supplied");
+
+
+    $('#id').val(accid);
+    $('#task_id').val(task_id).attr("selected", "selected").change();
+    $('#checkout_by').val(checkout_by).attr("selected", "selected").change();
+    $('#material_id').val(material_id).attr("selected", "selected").change();
+    $('#quantity').val(quantity);
+    $('#dated').val(dated);
+    $('#details').val(details);
+    $('#approved_by').val(approved_by).attr("selected", "selected").change();
+
+    $('#business_id').val(business_id).attr("selected", "selected").change();
+    $('#mtcbutton').html("Update Checkout");
+
+  }
+
+  function accountHead(accid){
+    var title = $('#ach'+accid).attr("data-title");
+    var category = $('#ach'+accid).attr("data-category");
+    var type = $('#ach'+accid).attr("data-type");
+    var description = $('#ach'+accid).attr("data-description");
+
+    $('#id').val(accid);
+    $('#title').val(title);
+    $('#category').val(category).attr("selected", "selected");
+    $('#type').val(type);
+    $('#description').val(description);
+
+  }
+
+  function category(accid){
+            var title = $('#ach'+accid).attr("data-title");
+            var category_group = $('#ach'+accid).attr("data-category_group");
+            var description = $('#ach'+accid).attr("data-description");
+            var business_id = $('#ach'+accid).attr("data-business_id");
+
+
+            $('#id').val(accid);
+            $('#title').val(title);
+            $('#category_group').val(category_group).attr("selected", "selected");
+            $('#description').val(description);
+            $('#catbutton').html("Update Category");
+            $('#business_id').val(business_id);
+
+  }
+
+  // ADD MATERIAL CHECKOUT
+  $(".add_item").click(function(){
+            // alert("Am here!");
+            // $(".spechead").show();
+            var item_class = $(".add_item").attr("id");
+            var old_class = parseFloat(item_class);
+            new_class = old_class+1;
+            $(".add_item").prop('id', new_class);
+
+            $("#1").clone().attr('id',new_class).appendTo("#item_list");
+            $("#"+new_class +" a").prop('id',"re"+new_class);
+
+            // $("table tbody#item_list").append("<tr scope='row' class='row"+new_class+"'><td class='input-field'><input type='text' name='property[]' value='' placeholder='e.g. Color, Brand etc'></td><td class='input-field'><td class='input-field'><input type='text' name='value[]' value='' placeholder='e.g. Red, HP etc'></td><td><a href='#' class='btn-floating red btn-small delpos' onClick='delRow("+new_class+")'><i class='small material-icons'>remove</i></a></td></tr>");
+
+  });
+
+  $(document.body).on('click','.removeitem',function(event) {
+
+    var item_id = $(this).attr("id");
+    item_id = item_id.substr(2);
+
+    $("#"+item_id).remove();
+    $("#itrow"+item_id).remove();
+    if($(".amount").length >= 0) {
+        reCalc();
+        $('#item'+item_id).toggle();
+    }
+
+  });
+
+
 
 </script>
 

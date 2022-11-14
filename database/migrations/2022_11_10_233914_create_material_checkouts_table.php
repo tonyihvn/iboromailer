@@ -24,7 +24,8 @@ class CreateMaterialCheckoutsTable extends Migration
             $table->unsignedBigInteger('approved_by')->index()->nullable();
             $table->foreign('approved_by')->references('id')->on('users');
 
-            $table->string('project_id',30)->nullable();
+            $table->unsignedBigInteger('task_id')->index()->nullable();
+            $table->foreign('task_id')->references('id')->on('tasks');
 
             $table->double('quantity',10,2);
             $table->date('dated');

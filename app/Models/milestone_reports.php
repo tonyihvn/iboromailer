@@ -16,8 +16,19 @@ class milestone_reports extends Model
         return $this->belongsTo(businesses::class, 'id', 'business_id');
     }
 
+    public function task()
+    {
+        return $this->belongsTo(tasks::class, 'task_id', 'id');
+    }
+
     public function milestone()
     {
-        return $this->belongsTo(project_milestones::class, 'id', 'milestone_id');
+        return $this->belongsTo(project_milestones::class, 'milestone_id', 'id');
     }
+
+    public function recordedBy()
+    {
+        return $this->belongsTo(User::class, 'recorded_by', 'id');
+    }
+
 }

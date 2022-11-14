@@ -18,6 +18,16 @@ class project_files extends Model
 
     public function project()
     {
-        return $this->belongsTo(projects::class, 'id', 'project_id');
+        return $this->belongsTo(projects::class, 'project_id', 'id');
+    }
+
+    public function milestone()
+    {
+        return $this->belongsTo(project_milestones::class, 'milestone_id', 'id');
+    }
+
+    public function task()
+    {
+        return $this->belongsTo(tasks::class, 'task_id', 'id');
     }
 }

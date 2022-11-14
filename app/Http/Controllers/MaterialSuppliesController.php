@@ -38,8 +38,6 @@ class MaterialSuppliesController extends Controller
      */
     public function store(Request $request)
     {
-
-
         material_supplies::updateOrCreate(['id'=>$request->id],[
             'material_id' => $request->material_id,
             'supplier_id' => $request->supplier_id,
@@ -49,8 +47,7 @@ class MaterialSuppliesController extends Controller
             'date_supplied' => $request->date_supplied,
             'business_id'=>$request->business_id,
             'batchno'=>$request->batchno,
-            'comfirmed_by'=>$request->comfirmed_by
-
+            'comfirmed_by'=>$request->confirmed_by
         ]);
 
         // Update Stock
@@ -58,7 +55,6 @@ class MaterialSuppliesController extends Controller
             'material_id'=>$request->material_id,
             'dated_added'=>$request->date_supplied,
             'business_id'=>$request->business_id
-
         ]);
 
         if($request->updating=="Yes"){

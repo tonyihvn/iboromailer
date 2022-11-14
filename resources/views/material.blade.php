@@ -55,7 +55,7 @@
                                     <td>{{$msu->quantity}}</td>
                                     <td>{{$msu->cost_per}}</td>
                                     <td>{{$msu->total_amount}}</td>
-                                    <td>{{$msu->dated}}</td>
+                                    <td>{{$msu->date_supplied}}</td>
                                 </tr>
                             @endforeach
                                 <tr>
@@ -72,7 +72,8 @@
                     <table class="table responsive-table">
                         <thead>
                             <tr style="color: ">
-                                <th>Production Batch No</th>
+                                <td>Job</td>
+                                <th>Project</th>
                                 <th>Quantity</th>
                                 <th>Details</th>
                                 <th>Checkout By</th>
@@ -84,7 +85,8 @@
                             @foreach ($mcheckouts as $mtc)
 
                             <tr>
-                                <td><b>{{$mtc->project_id}}</b></td>
+                                <td><b>{{$mtc->task->subject}}</b></td>
+                                <td><b>{{$mtc->task->project->title}}</b></td>
                                 <td><b>{{$mtc->quantity}}{{$mtc->material->measurement_unit}}</b></td>
                                 <td>{{$mtc->details}}</td>
                                 <td>{{$mtc->checkoutby->name}}</td>

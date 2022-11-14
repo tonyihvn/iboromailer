@@ -175,12 +175,10 @@
           </div>
           <div class="col-md-6">
             <div class="list-group">
-              <a href="{{url('new-project-file/'.$project->id)}}" class="list-group-item list-group-item-action active">Project Files <span class="btn btn-default" style="float: right;">New File</span></a>
-
+              <a href="{{url('add-file')}}" class="list-group-item list-group-item-action active">Project Files <span class="btn btn-default" style="float: right;">New File</span></a>
               @foreach ($project->project_files as $ft)
 
-              <a href="{{url('files/'.$ft->id)}}" class="list-group-item list-group-item-action">{{$ft->file_title}}</a>
-
+                  <a href="{{url('file/'.$ft->id)}}" class="list-group-item list-group-item-action">{{$ft->file_title}}</a>
 
               @endforeach
             </div>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\milestone_reports;
 use App\Http\Requests\Storemilestone_reportsRequest;
 use App\Http\Requests\Updatemilestone_reportsRequest;
+use Illuminate\Http\Request;
 
 class MilestoneReportsController extends Controller
 {
@@ -23,11 +24,37 @@ class MilestoneReportsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($cid)
+    public function create($tid)
     {
         return view('milestone-report')->with(['cid'=>$cid]);
 
     }
+
+    public function newtaskReport($tid)
+    {
+        return view('project-taskreport')->with(['task_id'=>$tid]);
+
+    }
+
+    public function milestonetaskReport($trid)
+    {
+        $taskreport = milestone_reports::where('id',$trid)->first();
+        return view('task-report')->with(['task'=>$taskreport]);
+
+    }
+
+    public function change_task_report_status(Request $request)
+    {
+        $taskreport = milestone_reports::where('id',$request->report_id)->first();
+        $taskreport->approval=$request->change_approval;
+        $taskreport->save();
+
+        $message = "Report Status Changed to ".$request->change_approval;
+
+        return redirect()->back()->with(['message'=>$message]);
+
+    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -35,9 +62,21 @@ class MilestoneReportsController extends Controller
      * @param  \App\Http\Requests\Storemilestone_reportsRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Storemilestone_reportsRequest $request)
+    public function store(Request $request)
     {
-        //
+        milestone_reports::create([
+            'milestone_id'=>$request->milestone_id,
+            'task_id'=>$request->task_id,
+            'subject'=>$request->subject,
+            'start_date'=>$request->start_date,
+            'end_date'=>$request->end_date,
+            'recorded_by'=>$request->recorded_by,
+            'category'=>$request->category,
+            'approval'=>$request->approval,
+            'business_id'=>$request->business_id
+        ]);
+        $message = "Task Report added successfully";
+        return redirect()->back()->with(['message'=>$message]);
     }
 
     /**

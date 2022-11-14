@@ -13,7 +13,7 @@ class categories extends Model
 
     public function business()
     {
-        return $this->belongsTo(businesses::class, 'id', 'business_id');
+        return $this->belongsTo(businesses::class, 'business_id', 'id');
     }
 
 

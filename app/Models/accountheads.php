@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class task_workers extends Model
+class accountheads extends Model
 {
     use HasFactory;
 
@@ -15,14 +15,4 @@ class task_workers extends Model
     {
         return $this->belongsTo(businesses::class, 'business_id', 'id');
     }
-
-    public function task(){
-        return $this->belongsTo(tasks::class, 'task_id', 'id');
-    }
-
-    public function worker(){
-        return $this->belongsTo(User::class, 'worker_id', 'id');
-    }
-
-
 }

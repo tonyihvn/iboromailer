@@ -8,6 +8,7 @@ use App\Http\Requests\StoretasksRequest;
 use App\Http\Requests\UpdatetasksRequest;
 use Illuminate\Http\Request;
 use App\Models\task_workers;
+use App\Models\categories;
 
 class TasksController extends Controller
 {
@@ -29,6 +30,41 @@ class TasksController extends Controller
     public function create($cid)
     {
         return view('project-task')->with(['cid'=>$cid]);
+
+    }
+
+    // General Task
+    public function newTask()
+    {
+        $categories = categories::where('business_id',Auth()->user()->business_id)->get();
+        return view('new-task')->with(['categories'=>$categories]);
+
+    }
+
+    // Save General Task
+    public function saveTask(Request $request)
+    {
+        tasks::updateOrCreate(['id'=>$request->tid],[
+            //'project_id'=>$request->project_id,
+            // 'milestone_id'=>$request->milestone_id,
+            'subject'=>$request->subject,
+            'start_date'=>$request->start_date,
+            'end_date'=>$request->end_date,
+            'details'=>$request->details,
+            'assigned_to'=>$request->assigned_to,
+            'category'=>$request->category,
+            'estimated_cost'=>$request->estimated_cost,
+            // 'actual_cost'=>$request->actual_cost,
+            // 'files'=>$request->files,
+
+            'status'=>$request->status,
+            'business_id'=>Auth()->user()->business_id
+
+        ]);
+
+        $message = "Task created successfully!";
+
+        return redirect()->back()->with(['message'=>$message]);
 
     }
 
@@ -59,7 +95,8 @@ class TasksController extends Controller
                 'worker_id'=>$worker_id,
                 'amount_paid' => $request->amountpaid[$key],
                 'work_date' => $request->work_date,
-                'task_id'=>$request->task_id
+                'task_id'=>$request->task_id,
+                'business_id'=>Auth()->user()->business_id
             ]);
 
         }
@@ -68,6 +105,32 @@ class TasksController extends Controller
         return redirect()->back()->with(['message'=>$message]);
     }
 
+    public function completetask($id)
+    {
+        $task = tasks::where('id',$id)->first();
+        $task->status = 'Completed';
+        $task->save();
+
+        $message = 'The task has been updated!';
+        // audit::create([
+        //     'action'=>"Task update",
+        //     'description'=>'Update',
+        //     'doneby'=>Auth()->user()->id,
+        //     'settings_id'=>Auth()->user()->settings_id,
+        // ]);
+        return redirect()->route('tasks')->with(['message'=>$message]);
+    }
+
+    public function inprogresstask($id)
+    {
+        $task = tasks::where('id',$id)->first();
+        $task->status = 'In Progress';
+        $task->save();
+
+        $message = 'The task has been updated!';
+
+        return redirect()->route('tasks')->with(['message'=>$message]);
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -120,8 +183,11 @@ class TasksController extends Controller
      * @param  \App\Models\tasks  $tasks
      * @return \Illuminate\Http\Response
      */
-    public function destroy(tasks $tasks)
+    public function destroy($task_id)
     {
-        //
+        tasks::find($task_id)->delete();
+        $message = "The selected task has been deleted";
+
+        return redirect()->back()->with(['message'=>$message]);
     }
 }

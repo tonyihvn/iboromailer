@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\project_milestones;
 use App\Models\tasks;
+use App\Models\projects;
+
 use App\Http\Requests\Storeproject_milestonesRequest;
 use App\Http\Requests\Updateproject_milestonesRequest;
 use Illuminate\Http\Request;
@@ -28,7 +30,8 @@ class ProjectMilestonesController extends Controller
      */
     public function create($pid)
     {
-        return view('project-milestone')->with(['project_id'=>$pid]);
+        $project = projects::select('id','title')->where('id',$pid)->first();
+        return view('project-milestone')->with(['project'=>$project]);
     }
 
     /**
@@ -88,8 +91,30 @@ class ProjectMilestonesController extends Controller
     }
 
     public function saveMilestone(Request $request){
-        project_milestones::create($request->all());
-        $message = "Project Milestone added successfully";
+        // project_milestones::create($request->all());
+
+        if($request->milestone_id!=''){
+            $outcome = "modified";
+        }else{
+            $outcome = "created";
+        }
+
+
+        project_milestones::updateOrCreate(['id'=>$request->milestone_id],[
+            'project_id'=>$request->project_id,
+            'title'=>$request->title,
+            'start_date'=>$request->start_date,
+            'end_date'=>$request->end_date,
+            'details'=>$request->details,
+            'assigned_to'=>$request->assigned_to,
+            'estimated_cost'=>$request->estimated_cost,
+            'actual_cost'=>$request->actual_cost,
+            'status'=>$request->status,
+            'business_id'=>Auth()->user()->business_id
+        ]);
+
+        $message = "The project milestone has been ".$outcome." successfully.  <b><a href='/project-dashboard/".$request->project_id."'>Back to Project Dashboard</a></b>";
+
         return redirect()->back()->with(['message'=>$message]);
     }
 

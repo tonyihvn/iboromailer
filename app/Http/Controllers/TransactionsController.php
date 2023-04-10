@@ -107,7 +107,7 @@ class TransactionsController extends Controller
      * @param  \App\Models\transactions  $transactions
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delTrans($id)
     {
         transactions::findOrFail($id)->delete();
         $message = 'The transaction\'s Record has been deleted!';

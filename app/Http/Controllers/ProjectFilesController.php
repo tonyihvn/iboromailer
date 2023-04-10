@@ -31,6 +31,12 @@ class ProjectFilesController extends Controller
 
     }
 
+    public function addProductFile($pid)
+    {
+        return view('add-files')->with(['product_id'=>$pid]);
+
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -60,11 +66,12 @@ class ProjectFilesController extends Controller
             'task_id'=>$request->task_id,
             'file_name'=>$file_name,
             'file_title'=>$request->file_title,
+            'featured'=>$request->featured,
             'details'=>$request->details,
             'cloud_location'=>$request->cloud_location,
             'business_id'=>$request->business_id
         ]);
-        $message = "Project File(s) uploaded successfully";
+        $message = "Project File(s) uploaded successfully. <b><a href='/project-dashboard/".$request->project_id."'>Back to Project Dashboard</a></b>";
         return redirect()->back()->with(['message'=>$message]);
     }
 

@@ -68,7 +68,7 @@ class MaterialCheckoutsController extends Controller
     {
         foreach($request->materialname as $key=>$material_id){
 
-            if($request->quantityused[$key]!=""){
+            if(isset($request->quantityused[$key])){
                 material_checkouts::create([
                     'material_id' => $material_id,
                     'checkout_by' => $request->checkout_by,

@@ -24,6 +24,7 @@ class CreateProjectFilesTable extends Migration
             $table->string('file_name',150)->nullable();
             $table->date('file_title')->nullable();
             $table->string('details',255)->nullable();
+            $table->string('featured',5)->nullable();
             $table->string('cloud_location',30)->nullable();
             $table->unsignedBigInteger('business_id')->index()->nullable();
             $table->foreign('business_id')->references('id')->on('businesses');

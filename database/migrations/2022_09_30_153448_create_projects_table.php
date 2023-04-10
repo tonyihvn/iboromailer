@@ -21,6 +21,8 @@ class CreateProjectsTable extends Migration
             $table->string('location',150)->nullable();
             $table->date('start_date')->nullable();
             $table->string('estimated_duration',30)->nullable();
+            $table->string('duration',30)->nullable();
+
             $table->text('details')->nullable();
             $table->unsignedBigInteger('project_manager')->index();
             $table->foreign('project_manager')->references('id')->on('users')->onDelete('cascade');

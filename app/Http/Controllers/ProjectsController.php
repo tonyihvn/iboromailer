@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\projects;
 use App\Http\Requests\StoreprojectsRequest;
 use App\Http\Requests\UpdateprojectsRequest;
+use Illuminate\Http\Request;
 
 class ProjectsController extends Controller
 {
@@ -15,7 +16,8 @@ class ProjectsController extends Controller
      */
     public function index()
     {
-        return view('projects');
+        $projects = projects::all();
+        return view('projects')->with(['projects'=>$projects]);
     }
 
     /**
@@ -25,7 +27,13 @@ class ProjectsController extends Controller
      */
     public function create($cid)
     {
-        return view('new-project')->with(['cid'=>$cid]);
+        return view('new-project')->with(['client_id'=>$cid]);
+
+    }
+
+    public function newProject()
+    {
+        return view('new-project');
 
     }
 
@@ -43,6 +51,12 @@ class ProjectsController extends Controller
 
     }
 
+    public function editProject($pid)
+    {
+        $project = projects::where('id',$pid)->first();
+        return view('new-project')->with(['project'=>$project]);
+    }
+
 
 
 
@@ -52,9 +66,30 @@ class ProjectsController extends Controller
      * @param  \App\Http\Requests\StoreprojectsRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreprojectsRequest $request)
+    public function store(Request $request)
     {
-        //
+        if($request->product_id!=''){
+            $outcome = "modified";
+        }else{
+            $outcome = "created";
+        }
+
+
+        products::updateOrCreate(['id'=>$request->project_id],[
+            'title'=>$request->title,
+            'price'=>$request->price,
+            'supplier_id'=>$request->supplier_id,
+            'start_date'=>$request->start_date,
+            'end_date'=>$request->end_date,
+            'detail'=>$request->detail,
+            'terms'=>$request->terms,
+            'status'=>$request->status,
+            'business_id'=>Auth()->user()->business_id
+        ]);
+
+        $message = 'The product has been '.$outcome.' successfully';
+
+        return redirect()->route('products')->with(['message'=>$message]);
     }
 
     /**

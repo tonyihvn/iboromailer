@@ -21,13 +21,13 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'about',
+        'matric_no',
         'phone_number',
-        'company_name',
+        'gender',
         'category',
         'address',
         'dob',
-        'business_id',
+        'school_id',
         'role',
         'status'
     ];
@@ -51,13 +51,17 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function projects()
+    public function school()
     {
-        return $this->hasMany(projects::class, 'client_id', 'id');
+        return $this->belongsTo(school::class, 'school_id', 'id');
     }
 
     public function tasks()
     {
         return $this->hasMany(tasks::class, 'assigned_to', 'id');
+    }
+    public function books()
+    {
+        return $this->hasMany(access::class, 'book_id', 'id');
     }
 }

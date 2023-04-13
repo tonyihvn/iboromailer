@@ -1,172 +1,67 @@
-@extends('layouts.theme')
-
+@extends('layouts.template')
+@php
+    $pagetype = 'Table';
+@endphp
 @section('content')
-    @php $pagename="staff_dashboard"; @endphp
-
-    <h3 class="page-title">Dashboard | <small style="color: green">Periodic Performance</small></h3>
-    <div class="row">
-        <div class="panel">
-            <div class="panel-heading">
-                <h3 class="panel-title">Stats</h3>
-            </div>
-            <div class="panel-body">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-3 col-sm-6">
-                            <div class="card-box bg-blue">
-                                <div class="inner">
-                                    <h3> {{$customers->count()}} </h3>
-                                    <p> Total Customers</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="fa fa-users" aria-hidden="true"></i>
-                                </div>
-                                <a href="/customers" class="card-box-footer">View More <i class="fa fa-arrow-circle-right"></i></a>
-                            </div>
-                        </div>
-
-
-
-                        <div class="col-lg-3 col-sm-6">
-                            <div class="card-box bg-red">
-                                <div class="inner">
-                                    <h3> {{$mytasks->count()}} </h3>
-                                    <p> Tasks / To Do </p>
-                                </div>
-                                <div class="icon">
-                                    <i class="fa fa-tasks"></i>
-                                </div>
-                                <a href="/tasks" class="card-box-footer">View More <i class="fa fa-arrow-circle-right"></i></a>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">Librarians / Staffs</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Staff</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
     </div>
 
-    <div class="row">
-        <div class="col-md-6">
-            <div class="panel">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Sales | this year</h3>
-                </div>
-                <div class="panel-body">
 
-                    <div id="sales-chart" style="height: 300px"></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="panel">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Reminders</h3>
-                </div>
-                <div class="panel-body">
-                    <table class="table">
-                        <thead>
+    <div class="card">
 
-                            <tr>
+        <div class="card-body" style="overflow: auto;">
+            <a href="{{ url('new-staff') }}" class="btn btn-primary" style="float: right;">Add New</a>
+            <br>
+            <table class="table responsive-table" id="products">
+                <thead>
+                    <tr>
+                        <th width="20">#</th>
+                        <th>Full Name</th>
+                        <th>ID</th>
+                        <th>Phone Number</th>
+                        <th>Category</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($allstudents as $st)
+                        <tr @if ($st->status == 'Active') style="background-color: azure !important;" @endif>
+                            <td>{{ $st->id }}</td>
+                            <td>{{ $st->name }}</td>
+                            <td>{{ $st->matric_no }}</td>
+                            <td>{{ $st->phone_number }}</td>
+                            <td>{{ $st->category }}</td>
+                            <td>{{ $st->status }}</td>
 
-                                <th>Title</th>
-                                <th>Date</th>
-                                <th>Activities</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($tasks as $ta)
-                                @if ($ta->category=="Reminder")
+                            <td width="90">
+                                <div class="btn-group">
+                                    <a href="{{ url('/edit-staff/' . $st->id) }}" class="btn btn-default btn-xs">Edit</a>
 
-                                    <tr>
-                                        <td>{{$ta->title}}</td>
-                                        <td>{{$ta->from==$ta->to?$ta->from:$ta->from." to ".$ta->to}}</td>
-                                        <td>{{$ta->activities}}</td>
+                                    <a href="{{ url('/delete-staff/' . $st->id) }}"
+                                        class="btn btn-success btn-xs">Delete</a>
+                                </div>
+                            </td>
 
-                                    </tr>
-                                @endif
-                            @endforeach
+                        </tr>
+                    @endforeach
 
 
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+                </tbody>
+            </table>
         </div>
     </div>
-
-    <style>
-        body{
-            background:#eee;
-            }
-
-            .card-box {
-                position: relative;
-                color: #fff;
-                padding: 20px 10px 40px;
-                margin: 20px 0px;
-            }
-            .card-box:hover {
-                text-decoration: none;
-                color: #f1f1f1;
-            }
-            .card-box:hover .icon i {
-                font-size: 100px;
-                transition: 1s;
-                -webkit-transition: 1s;
-            }
-            .card-box .inner {
-                padding: 5px 10px 0 10px;
-            }
-            .card-box h3 {
-                font-size: 27px;
-                font-weight: bold;
-                margin: 0 0 8px 0;
-                white-space: nowrap;
-                padding: 0;
-                text-align: left;
-            }
-            .card-box p {
-                font-size: 15px;
-            }
-            .card-box .icon {
-                position: absolute;
-                top: auto;
-                bottom: 5px;
-                right: 5px;
-                z-index: 0;
-                font-size: 72px;
-                color: rgba(0, 0, 0, 0.15);
-            }
-            .card-box .card-box-footer {
-                position: absolute;
-                left: 0px;
-                bottom: 0px;
-                text-align: center;
-                padding: 3px 0;
-                color: rgba(255, 255, 255, 0.8);
-                background: rgba(0, 0, 0, 0.1);
-                width: 100%;
-                text-decoration: none;
-            }
-            .card-box:hover .card-box-footer {
-                background: rgba(0, 0, 0, 0.3);
-            }
-            .bg-blue {
-                background-color: #00c0ef !important;
-            }
-            .bg-green {
-                background-color: #00a65a !important;
-            }
-            .bg-orange {
-                background-color: #f39c12 !important;
-            }
-            .bg-red {
-                background-color: #d9534f !important;
-            }
-
-    </style>
-
-
 @endsection

@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AccessMade | Dashboard</title>
+    <title>LibraryManager | Dashboard</title>
     <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
 
@@ -46,7 +46,7 @@
 
         <!-- Preloader -->
         <div class="preloader flex-column justify-content-center align-items-center">
-            <img class="animation__shake" src="{{ asset('dist/img/realtyplus_logo.png') }}" alt="RealtyPlus"
+            <img class="animation__shake" src="{{ asset('public/images/' . $school->logo) }}" alt="RealtyPlus"
                 height="60" width="60">
         </div>
 
@@ -95,21 +95,27 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
                         <i class="far fa-comments"></i>
-                        <span class="badge badge-danger navbar-badge">3</span>
+                        <span
+                            class="badge badge-danger navbar-badge">{{ $mytasks->where('category', 'Message')->count() }}</span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                         <a href="#" class="dropdown-item">
                             <!-- Message Start -->
                             <div class="media">
-                                <img src="{{ asset('dist/img/user1-128x128.jpg') }}" alt="User Avatar"
+                                <img src="{{ asset('public/images/' . $school->logo) }}" alt="User Avatar"
                                     class="img-size-50 mr-3 img-circle">
                                 <div class="media-body">
-                                    <h3 class="dropdown-item-title">
-                                        Brad Diesel
-                                        <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
-                                    </h3>
-                                    <p class="text-sm">Call me whenever you can...</p>
-                                    <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+                                    @foreach ($mytasks->where('category', 'Message') as $msg)
+                                        <h3 class="dropdown-item-title">
+                                            {{ $msg->createdBy->name }}
+                                            <span class="float-right text-sm text-danger"><i
+                                                    class="fas fa-star"></i></span>
+                                        </h3>
+                                        <a class="text-sm"
+                                            href="{{ url('task/' . $msg->id) }}">{{ $msg->subject }}</a>
+                                        <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i>
+                                            {{ $msg->created_at }}</p>
+                                    @endforeach
                                 </div>
                             </div>
                             <!-- Message End -->
@@ -123,18 +129,25 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
                         <i class="far fa-bell"></i>
-                        <span class="badge badge-warning navbar-badge">15</span>
+                        <span
+                            class="badge badge-warning navbar-badge">{{ $mytasks->where('category', 'Notification')->count() }}</span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                        <span class="dropdown-item dropdown-header">15 Notifications</span>
+                        <span
+                            class="dropdown-item dropdown-header">{{ $mytasks->where('category', 'Notification')->count() }}
+                            Notification(s)</span>
                         <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <i class="fas fa-envelope mr-2"></i> 4 new messages
-                            <span class="float-right text-muted text-sm">3 mins</span>
-                        </a>
+                        @foreach ($mytasks->where('category', 'Notification') as $noti)
+                            <a href="{{ url('task/' . $noti->id) }}" class="dropdown-item">
+                                <i class="fas fa-envelope mr-2"></i> {{ $noti->subject }}
+                                <span class="float-right text-muted text-sm">{{ $noti->start_date }}
+                                    {{ $noti->start_date == $noti->end_date ? ' ' : $noti->end_date }} </span>
+                            </a>
+                        @endforeach
+
                         <div class="dropdown-divider"></div>
 
-                        <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+                        <a href="{{ url('tasks') }}" class="dropdown-item dropdown-footer">See All Notifications</a>
                     </div>
                 </li>
                 <li class="nav-item">
@@ -156,9 +169,9 @@
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
             <a href="{{ '/home' }}" class="brand-link">
-                <img src="{{ asset('dist/img/realtyplus_logo.png') }}" alt="RealtyPlus"
+                <img src="{{ asset('public/images/' . $school->logo) }}" alt="RealtyPlus"
                     class="brand-image img-circle elevation-3" style="opacity: .8">
-                <span class="brand-text font-weight-light">AccessMade Ltd</span>
+                <span class="brand-text font-weight-light">LibraryManager</span>
             </a>
 
             <!-- Sidebar -->
@@ -196,7 +209,7 @@
                         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
                         <li class="nav-item menu-open">
-                            <a href="#" class="nav-link active">
+                            <a href="{{ url('/') }}" class="nav-link active">
                                 <i class="nav-icon fas fa-dashboard"></i>
                                 <p>
                                     Dashboard
@@ -205,93 +218,66 @@
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-book"></i>
+                                <p>
+                                    Books
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ url('books') }}" class="nav-link">
+                                        <i class="far fa-books nav-icon"></i>
+                                        <p>All Books</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ url('new-book') }}" class="nav-link">
+                                        <i class="far fa-add nav-icon"></i>
+                                        <p>New Book</p>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="{{ url('checkouts') }}" class="nav-link">
+                                        <i class="far fa-add nav-icon"></i>
+                                        <p>Checkouts</p>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-users"></i>
                                 <p>
-                                    Clients
+                                    Students
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="{{ url('clients') }}" class="nav-link">
+                                    <a href="{{ url('students') }}" class="nav-link">
                                         <i class="far fa-user nav-icon"></i>
-                                        <p>All Clients</p>
+                                        <p>All Students</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ url('new-client') }}" class="nav-link">
+                                    <a href="{{ url('new-student') }}" class="nav-link">
                                         <i class="far fa-user-plus nav-icon"></i>
-                                        <p>New Client</p>
+                                        <p>New Student</p>
                                     </a>
                                 </li>
 
                             </ul>
                         </li>
-
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-suitcase"></i>
-                                <p>
-                                    Products
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="{{ url('products') }}" class="nav-link">
-                                        <i class="far fa-things nav-icon"></i>
-                                        <p>View Products</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ url('addxproduct') }}" class="nav-link">
-                                        <i class="far fa-plus nav-icon"></i>
-                                        <p>Add Products</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ url('addproject') }}" class="nav-link">
-                                        <i class="far fa-user-subscribe nav-icon"></i>
-                                        <p>New Subscription</p>
-                                    </a>
-                                </li>
-
-                            </ul>
-                        </li>
-
-
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-credit-card"></i>
-                                <p>
-                                    Finance
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="{{ url('transactions') }}" class="nav-link">
-                                        <i class="far fa-user nav-icon"></i>
-                                        <p>Manage Transactions</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ url('accountheads') }}" class="nav-link">
-                                        <i class="far fa-user-plus nav-icon"></i>
-                                        <p>Manage Account Heads</p>
-                                    </a>
-                                </li>
-
-                            </ul>
-                        </li>
-
-
 
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-user"></i>
                                 <p>
-                                    People
+                                    Users
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
@@ -300,7 +286,14 @@
                                 <li class="nav-item">
                                     <a href="{{ url('staff') }}" class="nav-link">
                                         <i class="far fa-user-plus nav-icon"></i>
-                                        <p>Staff</p>
+                                        <p>Staff/Librarians</p>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="{{ url('add-staff') }}" class="nav-link">
+                                        <i class="far fa-user-plus nav-icon"></i>
+                                        <p>Add New Staff</p>
                                     </a>
                                 </li>
 
@@ -308,6 +301,12 @@
                                     <a href="{{ url('suppliers') }}" class="nav-link">
                                         <i class="far fa-user-plus nav-icon"></i>
                                         <p>Suppliers/Vendors</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ url('add-supplier') }}" class="nav-link">
+                                        <i class="far fa-user-plus nav-icon"></i>
+                                        <p>Add New Suppliers</p>
                                     </a>
                                 </li>
 
@@ -325,7 +324,7 @@
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="{{ url('tasks') }}" class="nav-link">
-                                        <i class="far fa-user nav-icon"></i>
+                                        <i class="far fa-tasks nav-icon"></i>
                                         <p>View Tasks</p>
                                     </a>
                                 </li>
@@ -352,7 +351,7 @@
                                 <li class="nav-item">
                                     <a href="{{ url('settings') }}" class="nav-link" data-toggle="modal"
                                         data-target="#settings">
-                                        <i class="far fa-user nav-icon"></i>
+                                        <i class="far fa-settings nav-icon"></i>
                                         <p>System Settings</p>
                                     </a>
 
@@ -361,6 +360,12 @@
                                     <a href="{{ url('categories') }}" class="nav-link">
                                         <i class="far fa-user-plus nav-icon"></i>
                                         <p>Categories</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ url('barcodes') }}" class="nav-link">
+                                        <i class="far fa-user-plus nav-icon"></i>
+                                        <p>Print Barcodes</p>
                                     </a>
                                 </li>
 
@@ -378,6 +383,22 @@
                             </a>
                         </li>
                     </ul>
+                    @if (isset($pagename))
+                        <div class="card" style="padding: 10px; margin-left: 10px; background-color:aquamarine;">
+                            <b>NOTE:</b><br>
+                            <p>You need to create the following Category Group Names: <br>
+                            <ul>
+                                <li>Book Locations</li>
+                                <li>Books</li>
+                                <li>Checkout Plans</li>
+                                <li>Students</li>
+                                <li>Suppliers</li>
+                                <li>Staff</li>
+                                <li>Tasks</li>
+                            </ul>
+                            </p>
+                        </div>
+                    @endif
                 </nav>
                 <!-- /.sidebar-menu -->
             </div>
@@ -411,7 +432,8 @@
         </div>
         <!-- /.content-wrapper -->
         <footer class="main-footer">
-            <strong>Copyright &copy; {{ date('Y') }} <a href="">AccessMade</a>.</strong>
+            <strong>Copyright &copy; {{ date('Y') }} <a href="">Anthony Nwokoma - NOUN
+                    Project</a>.</strong>
             All rights reserved.
             <div class="float-right d-none d-sm-inline-block">
                 <b>Version</b> 1.1.0
@@ -439,54 +461,33 @@
 
                 <!-- Modal body -->
                 <div class="modal-body">
-                    <div class="form-check">
-                        <input type="checkbox" name="create_new_ministry" id="create_new_ministry"
-                            class="form-check-input">
-                        <label class="form-check-label"><small style="color: {{ $business->color }}"><i>Click Here to
-                                    Create New Business</i></small></label>
-                    </div>
 
                     <form method="POST" action="{{ route('settings') }}" id="settingsform"
                         enctype="multipart/form-data">
                         @csrf
 
-                        <input type="hidden" name="id" value="{{ $business->id }}">
+                        <input type="hidden" name="id" value="{{ $school->id }}">
 
-                        <input type="hidden" name="oldlogo" value="{{ $business->logo }}">
+                        <input type="hidden" name="oldlogo" value="{{ $school->logo }}">
 
-                        <input type="hidden" name="oldbackground" value="{{ $business->background }}">
-
-                        <input type="hidden" name="newministry" id="newministry" value="">
+                        <input type="hidden" name="oldbackground" value="{{ $school->background }}">
 
                         <div class="form-group">
-                            <label for="ministrygroup_id" class="control-label ">Ministry Group/Headquarter</label>
-                            <select class="form-control" name="ministrygroup_id" id="ministrygroup_id">
-                                <option value="{{ $business->businessgroup_id }}" selected>
-                                    {{ $businessgroups->where('id', $business->businessgroup_id)->first()->businessgroup_name }}
-                                </option>
-                                @foreach ($businessgroups as $mg)
-                                    <option value="{{ $mg->id }}">{{ $mg->businessgroup_name }}</option>
-                                @endforeach
-
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="ministry_name">Ministry / Church Name</label>
-                            <input type="text" name="ministry_name" id="ministry_name" class="form-control"
-                                value="{{ $business->business_name }}">
+                            <label for="school_name">SchoolName</label>
+                            <input type="text" name="school_name" id="school_name" class="form-control"
+                                value="{{ $school->school_name }}">
                         </div>
 
                         <div class="form-group">
                             <label for="motto">Motto</label>
                             <input type="text" name="motto" id="motto" class="form-control"
-                                value="{{ $business->motto }}">
+                                value="{{ $school->motto }}">
                         </div>
 
                         <div class="form-group">
                             <label for="address">Address</label>
                             <input type="text" name="address" id="address" class="form-control"
-                                value="{{ $business->address }}">
+                                value="{{ $school->address }}">
                         </div>
 
 
@@ -505,13 +506,13 @@
                         <div class="form-group">
                             <label for="color">Choose System Colour</label>
                             <input type="color" name="color" id="color" class="form-control"
-                                value="{{ $business->color }}">
+                                value="{{ $school->color }}">
                         </div>
 
                         <div class="form-group">
                             <label for="user_id" class="control-label ">Admin User</label>
                             <select class="form-control" name="user_id" id="user_id">
-                                <option value="{{ $business->user_id }}" selected>{{ $business->user->name }}
+                                <option value="{{ $school->user_id }}" selected>{{ $school->user->name }}
                                 </option>
                                 @foreach ($staff as $hm)
                                     <option value="{{ $hm->id }}">{{ $hm->name }}</option>
@@ -523,7 +524,7 @@
                         <div class="form-group">
                             <label for="mode">Mode</label>
                             <select class="form-control" name="mode" id="mode">
-                                <option value="{{ $business->mode }}">{{ $business->mode }}</option>
+                                <option value="{{ $school->mode }}">{{ $school->mode }}</option>
                                 <option value="Active" selected>Active</option>
                                 <option value="Maintenance">Maintenance</option>
                             </select>
@@ -562,11 +563,8 @@
     <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
     @if (isset($pagetype) && $pagetype == 'Dashboard')
-        <!-- ChartJS -->
-        <script src="{{ asset('plugins/chart.js/Chart.min.js') }}"></script>
-
         <script src="{{ asset('plugins/jquery-knob/jquery.knob.min.js') }}"></script>
-        <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+
         <script src="{{ asset('dist/js/pages/dashboard.js') }}"></script>
     @endif
 
@@ -587,15 +585,10 @@
     <script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
     <script>
         $(function() {
-            // On Page Load
-
-            //Date picker
 
             $('.date').datetimepicker({
                 format: 'YYYY-MM-DD'
             });
-
-
 
             $('.select2').select2();
 
@@ -603,176 +596,19 @@
 
         });
 
-        function material(accid) {
-
-            var name = $('#ach' + accid).attr("data-name");
-            var type = $('#ach' + accid).attr("data-type");
-            var measurement_unit = $('#ach' + accid).attr("data-measurement_unit");
-            var size = $('#ach' + accid).attr("data-size");
-            var picture = $('#ach' + accid).attr("data-picture");
-
-            var cost_per = $('#ach' + accid).attr("data-cost_per");
-            var business_id = $('#ach' + accid).attr("data-business_id");
-            var category = $('#ach' + accid).attr("data-category");
-
-            $('#id').val(accid);
-            $('#name').val(name);
-            $('#type').val(type).attr("selected", "selected");
-            $('#measurement_unit').val(measurement_unit);
-            $('#size').val(size);
-
-
-
-            $('#cost_per').val(cost_per);
-            $('#oldpicture').val(picture);
-            $('#category').val(category).attr("selected", "selected");
-            $('#business_id').val(business_id).attr("selected", "selected");
-            $('#matbutton').html("Update Material");
-
-        }
-
-        function supplier(accid) {
-
-            var supplier_name = $('#ach' + accid).attr("data-supplier_name");
-            var company_name = $('#ach' + accid).attr("data-company_name");
-            var phone_number = $('#ach' + accid).attr("data-phone_number");
-            var details = $('#ach' + accid).attr("data-details");
-            var address = $('#ach' + accid).attr("data-address");
-            var business_id = $('#ach' + accid).attr("data-business_id");
-            var category = $('#ach' + accid).attr("data-category");
-
-            $('#id').val(accid);
-            $('#company_name').val(company_name);
-            $('#supplier_name').val(supplier_name);
-            $('#phone_number').val(phone_number);
-            $('#details').val(details);
-            $('#address').val(address);
-            $('#category').val(category).attr("selected", "selected").change();
-            $('#business_id').val(business_id).attr("selected", "selected").change();
-            $('#supbutton').html("Update Supplier");
-
-        }
-
-        function materialcheckout(accid) {
-
-            $("#forcheckout").show();
-
-            $("#materiallist").hide();
-
-            var material_name = $('#ach' + accid).attr("data-material_name");
-
-            $("#material_named").text(material_name).change();
-
-            $("#quantity").attr('type', 'number').change();
-
-            var checkout_by = $('#ach' + accid).attr("data-checkout_by");
-            var approved_by = $('#ach' + accid).attr("data-approved_by");
-            var task_id = $('#ach' + accid).attr("data-task_id");
-
-            var material_id = $('#ach' + accid).attr("data-material_id");
-            var quantity = $('#ach' + accid).attr("data-quantity");
-            var business_id = $('#ach' + accid).attr("data-business_id");
-            var dated = $('#ach' + accid).attr("data-dated");
-            var details = $('#ach' + accid).attr("data-details");
-
-            var date_supplied = $('#ach' + accid).attr("data-date_supplied");
-
-
-            $('#id').val(accid);
-            $('#task_id').val(task_id).attr("selected", "selected").change();
-            $('#checkout_by').val(checkout_by).attr("selected", "selected").change();
-            $('#material_id').val(material_id).attr("selected", "selected").change();
-            $('#quantity').val(quantity);
-            $('#dated').val(dated);
-            $('#details').val(details);
-            $('#approved_by').val(approved_by).attr("selected", "selected").change();
-
-            $('#business_id').val(business_id).attr("selected", "selected").change();
-            $('#mtcbutton').html("Update Checkout");
-
-        }
-
-        function accountHead(accid) {
-            var title = $('#ach' + accid).attr("data-title");
-            var category = $('#ach' + accid).attr("data-category");
-            var type = $('#ach' + accid).attr("data-type");
-            var description = $('#ach' + accid).attr("data-description");
-
-            $('#id').val(accid);
-            $('#title').val(title);
-            $('#category').val(category).attr("selected", "selected");
-            $('#type').val(type);
-            $('#description').val(description);
-
-        }
-
         function category(accid) {
             var title = $('#ach' + accid).attr("data-title");
-            var category_group = $('#ach' + accid).attr("data-category_group");
+            var group_name = $('#ach' + accid).attr("data-group_name");
             var description = $('#ach' + accid).attr("data-description");
-            var business_id = $('#ach' + accid).attr("data-business_id");
+            var school_id = $('#ach' + accid).attr("data-school_id");
 
 
             $('#id').val(accid);
             $('#title').val(title);
-            $('#category_group').val(category_group).attr("selected", "selected");
+            $('#group_name').val(group_name).attr("selected", "selected");
             $('#description').val(description);
             $('#catbutton').html("Update Category");
-            $('#business_id').val(business_id);
-
-        }
-
-        function subplan(accid) {
-            var title = $('#ach' + accid).attr("data-title");
-            var product_id = $('#ach' + accid).attr("data-product_id");
-            var frequency = $('#ach' + accid).attr("data-frequency");
-            var no_times = $('#ach' + accid).attr("data-no_times");
-            var duration_per = $('#ach' + accid).attr("data-duration_per");
-            var amount_per = $('#ach' + accid).attr("data-amount_per");
-            var penalty = $('#ach' + accid).attr("data-penalty");
-            var business_id = $('#ach' + accid).attr("data-business_id");
-
-
-            $('#id').val(accid);
-            $('#title').val(title);
-            $('#product_id').val(product_id).attr("selected", "selected");
-            $('#frequency').val(frequency);
-            $('#no_times').val(no_times);
-            $('#duration_per').val(duration_per);
-            $('#amount_per').val(amount_per);
-            $('#penalty').val(penalty);
-            $('#catbutton').html("Update Subscription Plan");
-            $('#business_id').val(business_id);
-
-        }
-
-        function transaction(accid) {
-
-
-            var title = $('#ach' + accid).attr("data-title");
-            var date = $('#ach' + accid).attr("data-date");
-            var account_head = $('#ach' + accid).attr("data-account_head");
-            var amount = $('#ach' + accid).attr("data-amount");
-            var reference_no = $('#ach' + accid).attr("data-reference_no");
-            var detail = $('#ach' + accid).attr("data-detail");
-            var project = $('#ach' + accid).attr("data-project");
-            var from = $('#ach' + accid).attr("data-from");
-            var to = $('#ach' + accid).attr("data-to");
-            var approved_by = $('#ach' + accid).attr("data-approved_by");
-            var recorded_by = $('#ach' + accid).attr("data-recorded_by");
-
-            $('#title').val(title);
-            $('#id').val(accid);
-            $('#date').val(date);
-            $('#account_head').val(account_head).attr("selected", "selected");
-            $('#project_id').val(project).attr("selected", "selected");
-            $('#amount').val(amount);
-            $('#reference_no').val(reference_no);
-            $('#detail').val(detail);
-            $('#from').val(from).attr("selected", "selected");
-            $('#to').val(to).attr("selected", "selected");
-            $('#approved_by').val(approved_by).attr("selected", "selected");
-            $('#recorded_by').val(recorded_by).attr("selected", "selected");
+            $('#school_id').val(school_id);
 
         }
 
@@ -801,16 +637,6 @@
             $("#itrow" + item_id).remove();
         });
 
-        $(".subplanCalc").on('input', function(event) {
-            var price = parseFloat($("#product_id").find(":selected").data("price"));
-
-            var no_times = $("#no_times").val();
-            var amount_per = Math.ceil((price / no_times).toFixed(2))
-
-            $("#amount_per").val(amount_per);
-        });
-
-
         // ADD STAFF CHECKOUT
         $(".adds_item").click(function() {
             var item_class = $(".adds_item").attr("id");
@@ -833,6 +659,21 @@
             $("#" + item_id).remove();
             $("#itrow2" + item_id).remove();
 
+        });
+
+        $("#searchkey").on('change', function postinput() {
+            var searckkey = $(this).val(); // this.value
+            $.ajax({
+                url: 'searchbook',
+                data: {
+                    searckkey: searckkey
+                },
+                type: 'post'
+            }).done(function(responseData) {
+                console.log('Done: ', responseData);
+            }).fail(function() {
+                console.log('Failed');
+            });
         });
     </script>
 

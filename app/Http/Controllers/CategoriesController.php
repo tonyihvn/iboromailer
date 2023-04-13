@@ -38,9 +38,9 @@ class CategoriesController extends Controller
     {
         categories::updateOrCreate(['id'=>$request->id],[
             'title'=>$request->title,
-            'group_name'=>$request->category_group,
+            'group_name'=>$request->group_name,
             'description'=>$request->description,
-            'business_id'=>Auth()->user()->business_id
+            'school_id'=>Auth()->user()->school_id
 
         ]);
 

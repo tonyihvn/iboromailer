@@ -36,7 +36,7 @@ class TasksController extends Controller
     // General Task
     public function newTask()
     {
-        $categories = categories::where('business_id',Auth()->user()->business_id)->get();
+        $categories = categories::where('school_id',Auth()->user()->school_id)->get();
         return view('new-task')->with(['categories'=>$categories]);
 
     }
@@ -45,20 +45,15 @@ class TasksController extends Controller
     public function saveTask(Request $request)
     {
         tasks::updateOrCreate(['id'=>$request->tid],[
-            //'project_id'=>$request->project_id,
-            // 'milestone_id'=>$request->milestone_id,
             'subject'=>$request->subject,
             'start_date'=>$request->start_date,
             'end_date'=>$request->end_date,
             'details'=>$request->details,
             'assigned_to'=>$request->assigned_to,
             'category'=>$request->category,
-            'estimated_cost'=>$request->estimated_cost,
-            // 'actual_cost'=>$request->actual_cost,
-            // 'files'=>$request->files,
-
             'status'=>$request->status,
-            'business_id'=>Auth()->user()->business_id
+            'created_by'=>Auth()->user()->id,
+            'school_id'=>Auth()->user()->school_id
 
         ]);
 
@@ -71,8 +66,7 @@ class TasksController extends Controller
     public function viewTask($tid)
     {
         $task = tasks::where('id',$tid)->first();
-        $materials = materials::select('id','name','measurement_unit')->get();
-        return view('task')->with(['task'=>$task,'materials'=>$materials]);
+        return view('task')->with(['task'=>$task]);
 
     }
 
@@ -88,22 +82,6 @@ class TasksController extends Controller
 
     }
 
-    public function addWorkers(Request $request)
-    {
-        foreach($request->worker as $key=>$worker_id){
-            task_workers::create([
-                'worker_id'=>$worker_id,
-                'amount_paid' => $request->amountpaid[$key],
-                'work_date' => $request->work_date,
-                'task_id'=>$request->task_id,
-                'business_id'=>Auth()->user()->business_id
-            ]);
-
-        }
-
-        $message = "Workers added to the task";
-        return redirect()->back()->with(['message'=>$message]);
-    }
 
     public function completetask($id)
     {
@@ -112,12 +90,7 @@ class TasksController extends Controller
         $task->save();
 
         $message = 'The task has been updated!';
-        // audit::create([
-        //     'action'=>"Task update",
-        //     'description'=>'Update',
-        //     'doneby'=>Auth()->user()->id,
-        //     'settings_id'=>Auth()->user()->settings_id,
-        // ]);
+
         return redirect()->route('tasks')->with(['message'=>$message]);
     }
 

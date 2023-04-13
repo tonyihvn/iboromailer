@@ -11,9 +11,9 @@ class categories extends Model
 
     protected $guarded = [];
 
-    public function business()
+    public function school()
     {
-        return $this->belongsTo(businesses::class, 'business_id', 'id');
+        return $this->belongsTo(school::class, 'school_id', 'id');
     }
 
 

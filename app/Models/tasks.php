@@ -11,38 +11,22 @@ class tasks extends Model
 
     protected $guarded = [];
 
-    public function business()
-    {
-        return $this->belongsTo(businesses::class, 'id', 'business_id');
-    }
 
-    public function project()
+    public function school()
     {
-        return $this->belongsTo(projects::class, 'project_id', 'id');
-    }
-
-    public function milestone()
-    {
-        return $this->belongsTo(project_milestones::class, 'milestone_id', 'id');
-    }
-
-    public function reports()
-    {
-        return $this->hasMany(milestone_reports::class, 'task_id', 'id');
+        return $this->belongsTo(school::class, 'school_id', 'id');
     }
 
     public function assignedTo()
     {
-        return $this->belongsTo(User::class, 'assigned_to', 'id');
+        return $this->hasOne(User::class, 'id', 'assigned_to');
     }
 
-    public function workers()
+    public function createdBy()
     {
-        return $this->hasMany(task_workers::class, 'task_id', 'id');
+        return $this->hasOne(User::class, 'id', 'created_by');
     }
 
-    public function materialsUsed()
-    {
-        return $this->hasMany(material_checkouts::class, 'task_id', 'id');
-    }
+
+
 }

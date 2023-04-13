@@ -26,28 +26,15 @@
                 @csrf
                 <input type="hidden" name="tid" value="">
 
-                <div class="form-group col-md-12">
-                    <label for="title">Subject</label>
-                    <input type="text" class="form-control" name="subject" id="subject" aria-describedby="subject"
-                        placeholder="Enter a Subject">
-                    <small id="subject" class="form-text text-muted">The subject or title of the task</small>
-                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="title">Subject</label>
+                        <input type="text" class="form-control" name="subject" id="subject" aria-describedby="subject"
+                            placeholder="Enter a Subject">
+                        <small id="subject" class="form-text text-muted">The subject or title of the task</small>
+                    </div>
 
-                <div class="form-group col-md-12">
-                    <label for="details">Task Details</label>
-                    <textarea name="details" id="details" class="wyswygeditor">
-                    Place <em>some</em> <u>text</u> <strong>here</strong>
-                    </textarea>
-
-                    <small id="task_details" class="form-text text-muted">A Detailed infomation about the task being
-                        entered</small>
-                </div>
-
-
-
-                <div class="form-group row">
-
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label>Start Date:</label>
                         <div class="input-group date" id="start_date_activator" data-target-input="nearest">
                             <input type="text" name="start_date" class="form-control datetimepicker-input"
@@ -59,7 +46,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label>End Date:</label>
                         <div class="input-group date" id="end_date_activator" data-target-input="nearest">
                             <input type="text" name="end_date" class="form-control datetimepicker-input"
@@ -69,13 +56,16 @@
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <div class="col-md-4">
-                        <label for="estimated_cost">Estimated Cost</label>
-                        <input type="number" step="0.01" class="form-control" name="estimated_cost" id="estimated_cost"
-                            placeholder="Estimated Cost">
-                    </div>
+                <div class="form-group col-md-12">
+                    <label for="details">Task Details</label>
+                    <textarea name="details" id="details" class="wyswygeditor">
+                    Place <em>some</em> <u>text</u> <strong>here</strong>
+                    </textarea>
 
+                    <small id="task_details" class="form-text text-muted">A Detailed infomation about the task being
+                        entered</small>
                 </div>
 
                 <div class="form-group row">
@@ -104,8 +94,8 @@
                     <div class="col-md-4">
                         <label for="">Category</label>
                         <select class="form-control" name="category" required>
-                            @foreach ($categories as $cats)
-                                <option value="{{ $cats->id }}">
+                            @foreach ($categories->where('group_name', 'Tasks') as $cats)
+                                <option value="{{ $cats->title }}">
                                     {{ $cats->title }}
                                 </option>
                             @endforeach

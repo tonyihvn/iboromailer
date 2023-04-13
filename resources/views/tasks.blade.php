@@ -31,7 +31,7 @@
                     <thead>
                         <tr style="color: ">
                             <th>Title</th>
-                            <th>Details</th>
+
                             <th>Date</th>
                             <th>Status</th>
                             <th>Assigned To</th>
@@ -45,21 +45,20 @@
                                 @if ($task->status == 'In Progress') style="background-color: #FFF8B0 !important;" @endif>
                                 <td><b>{{ $task->subject }}</b> <br> <small>Category: <i>{{ $task->category }}</i></small>
                                 </td>
-                                <td>{!! isset($task->project) ? '<i>Project: </i>' . $task->project->title . '<br><hr>' : '' !!}
-                                    {!! $task->details !!}</td>
+
                                 <td>{{ $task->start_date . ' ' . $task->end_date }}</td>
                                 <td>{{ $task->status }}</td>
                                 <td>{{ is_numeric($task->assigned_to) ? $task->assignedTo->name : '' }}
                                 </td>
 
                                 <td>
-
+                                    <a href="{{ url('/task/' . $task->id) }}/{{ $task->member }}"
+                                        class="badge badge-primary">View</a>
                                     <a href="{{ url('/inprogresstask/' . $task->id) }}/{{ $task->member }}"
                                         class="badge badge-warning">In Progress</a>
                                     <a href="{{ url('/completetask/' . $task->id) }}/{{ $task->member }}"
                                         class="badge badge-success">Completed</a><br>
-                                    <a href="{{ url('/new-task-report/' . $task->id) }}/{{ $task->member }}"
-                                        class="badge badge-info">Add Report</a>
+
 
                                     <a href="{{ url('/del-task/' . $task->id) }}" class="badge badge-danger"
                                         onclick="return confirm('Are you sure you want to delete this task? {{ $task->title }}?')">Delete</a>

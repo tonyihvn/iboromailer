@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AccessMade | Sign In</title>
+    <title>LibraryManager | Sign In</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -25,7 +25,7 @@
 <body class="hold-transition register-page">
     <div class="register-box">
         <div class="register-logo">
-            <a href="#"><b>Access</b>Made</a>
+            <a href="#"><b>Library</b>Manager</a>
         </div>
 
         <div class="card">

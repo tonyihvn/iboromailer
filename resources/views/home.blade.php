@@ -29,14 +29,14 @@
                     <!-- small box -->
                     <div class="small-box bg-info">
                         <div class="inner">
-                            <h3>{{ $clients->count() }}</h3>
+                            <h3>{{ $books->count() }}</h3>
 
-                            <p>Clients</p>
+                            <p>Books</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-persons"></i>
                         </div>
-                        <a href="{{ url('clients') }}" class="small-box-footer">View All Clients <i
+                        <a href="{{ url('books') }}" class="small-box-footer">View All Books <i
                                 class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
@@ -46,14 +46,14 @@
                     <!-- small box -->
                     <div class="small-box bg-warning">
                         <div class="inner">
-                            <h3>{{ $projects->count() }}</h3>
+                            <h3>{{ $students->count() }}</h3>
 
-                            <p>Projects</p>
+                            <p>Students</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-person-add"></i>
                         </div>
-                        <a href="{{ url('projects') }}" class="small-box-footer">More info <i
+                        <a href="{{ url('students') }}" class="small-box-footer">View All <i
                                 class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
@@ -64,10 +64,10 @@
                     <!-- small box -->
                     <div class="small-box bg-success">
                         <div class="inner">
-                            <h3>{{ $projects->where('status', 'Completed')->count() }}
+                            <h3>{{ $checkouts->where('status', 'CheckedOut')->count() }}
                             </h3>
 
-                            <p>Projects Completed</p>
+                            <p>Book Checkouts</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-stats-bars"></i>
@@ -81,7 +81,7 @@
                     <!-- small box -->
                     <div class="small-box bg-danger">
                         <div class="inner">
-                            <h3>{{ $projects->where('status', 'In Progress')->count() }}</h3>
+                            <h3>{{ $books->where('status', 'In Progress')->count() }}</h3>
 
                             <p>Ongoing Projects</p>
                         </div>
@@ -95,8 +95,36 @@
                 <!-- ./col -->
             </div>
             <!-- /.row -->
+            <h3>Search For Books</h3>
+
+            <form action="{{ url('searchByISBN') }}" method="post">
+                @csrf
+                <div class="row" style="align-content: center;">
+                    <div class="form-group col-md-4 col-md-offset-2">
+                        <input type="text" id="isbn_no" name="isbn_no" value="" placeholder="Search for Books"
+                            class="form-control" autofocus>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <input type="submit" value="Search" class="btn btn-primary">
+                    </div>
+                </div>
+            </form>
+
             <div id="container" class="row">
-                <canvas id="canvas"></canvas>
+                @foreach ($books as $bk)
+                    <div class="card col-md-3">
+                        <img class="card-img-top" src="{{ asset('public/files/' . $bk->image) }}" alt="Card image"
+                            style=" height: 200px;">
+                        <div class="card-body" style="text-align: center !important">
+                            <h6 style="text-align: center !important"><b>{{ $bk->title }}</b></h6>
+                            <p class="card-text"><i>{{ $bk->subtitle }}</i></p>
+                            <div class="btn-group">
+                                <a href="{{ url('book/' . $bk->id) }}" class="btn btn-xs btn-primary">View Details</a>
+                                <a href="{{ url('checkout/' . $bk->id) }}" class="btn btn-xs btn-success">Checkout</a>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
             </div>
         </div><!-- /.container-fluid -->
     </section>
@@ -185,84 +213,4 @@
             background-color: #d9534f !important;
         }
     </style>
-    @php
-        $out = '';
-        foreach ($projects->where('status', 'In Progress') as $o) {
-            $out .= '"' . $o->title . '",';
-        }
-        $allPtitles = '[' . substr($out, 0, -1) . ']';
-        
-        // GET ALL MILESTONES ARRAY
-        $setmilestones = '';
-        foreach ($projects->where('status', 'In Progress') as $pmiles) {
-            if (isset($pmiles->milestones)) {
-                $setmilestones .= $pmiles->milestones->count() . ',';
-            } else {
-                $setmilestones .= '0,';
-            }
-        }
-        $allPMilestoneCount = '[' . substr($setmilestones, 0, -1) . ']';
-        
-        // GET COMPLETED MILESTONES ARRAY
-        $setmilestonesc = '';
-        foreach ($projects->where('status', 'In Progress') as $pmiles) {
-            if (isset($pmiles->milestones)) {
-                $setmilestonesc .= $pmiles->milestones->where('status', 'Completed')->count() . ',';
-            } else {
-                $setmilestonesc .= '0,';
-            }
-        }
-        $allPMilestoneCCount = '[' . substr($setmilestonesc, 0, -1) . ']';
-    @endphp
-    <script>
-        var barChartData = {
-            labels: {!! $allPtitles !!},
-
-            @php
-                
-            @endphp
-            datasets: [{
-                    label: "Milestones",
-                    backgroundColor: "grey",
-                    borderColor: "red",
-                    borderWidth: 1,
-                    data: {!! $allPMilestoneCount !!}
-                },
-                {
-                    label: "Completed Milestones",
-                    backgroundColor: "lightblue",
-                    borderColor: "blue",
-                    borderWidth: 1,
-                    data: {!! $allPMilestoneCCount !!}
-                }
-            ]
-        };
-
-        var chartOptions = {
-            responsive: true,
-            legend: {
-                position: "top"
-            },
-            title: {
-                display: true,
-                text: "Ongoing Projects Performance Monitor"
-            },
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            }
-        }
-
-        window.onload = function() {
-            var ctx = document.getElementById("canvas").getContext("2d");
-            window.myBar = new Chart(ctx, {
-                type: "bar",
-                data: barChartData,
-                options: chartOptions
-            });
-        };
-    </script>
 @endsection

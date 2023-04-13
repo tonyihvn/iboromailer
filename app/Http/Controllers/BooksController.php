@@ -60,7 +60,7 @@ class BooksController extends Controller
                 $file_name = "";
         }
 
-        $bid = books::updateOrCreate(['id'=>$request->cid],[
+        $bid = books::updateOrCreate(['id'=>$request->bid],[
             'title'=>$request->title,
             'subtitle'=>$request->subtitle,
             'author'=>$request->author,
@@ -72,23 +72,23 @@ class BooksController extends Controller
             'copyright_year'=>$request->copyright_year,
             'status'=>$request->status,
             'school_id'=>Auth()->user()->school_id
+        ])->id;
 
-        ]);
-
-        book_stock::updateOrCreate(['book_id',$bid->id],[
-            'book_id'=>$bid->id,
+        book_stock::updateOrCreate(['book_id'=>$bid],[
+            'book_id'=>$bid,
             'quantity'=>0,
             'school_id'=>Auth()->user()->school_id
         ]);
 
         if($request->isbn_no==""){
-            $isbn_no=="NA".$bid->id;
+            $isbn_no=="NA".$bid;
         }else{
             $isbn_no = $request->isbn_no;
         }
 
-        $bid->isbn_no = $isbn_no;
-        $bid->save();
+        $book = books::where('id',$bid)->first();
+        $book->isbn_no = $isbn_no;
+        $book->save();
 
         $message = 'The '.$request->object.' has been '.$outcome.' successfully';
 

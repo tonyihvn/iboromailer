@@ -64,7 +64,7 @@
                     <!-- small box -->
                     <div class="small-box bg-success">
                         <div class="inner">
-                            <h3>{{ $checkouts->where('status', 'CheckedOut')->count() }}
+                            <h3>{{ $checkouts->where('status', 'Checkedout')->count() }}
                             </h3>
 
                             <p>Book Checkouts</p>
@@ -81,14 +81,14 @@
                     <!-- small box -->
                     <div class="small-box bg-danger">
                         <div class="inner">
-                            <h3>{{ $books->where('status', 'In Progress')->count() }}</h3>
+                            <h3>{{ $mytasks->where('status', '!=', 'Completed')->count() }}</h3>
 
-                            <p>Ongoing Projects</p>
+                            <p>Tasks & Messages</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-pie-graph"></i>
                         </div>
-                        <a href="{{ url('projects') }}" class="small-box-footer">More info <i
+                        <a href="{{ url('tasks') }}" class="small-box-footer">View all <i
                                 class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>

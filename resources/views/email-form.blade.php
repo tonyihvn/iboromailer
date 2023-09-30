@@ -11,7 +11,7 @@
                     <input type="text" name="recipients" class="form-control" required>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <label for="mail_category" class="form-label">Send to Group</label>
                 <select class="form-select form-control" id="contact_group" name="contact_group" >
                     <option value="Events" selected>Select Group</option>

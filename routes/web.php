@@ -40,5 +40,10 @@ Route::get('/contact-create', [ContactsController::class, 'create'])->name('cont
 Route::post('/savecontacts', [ContactsController::class, 'store'])->name('savecontacts');
 Route::get('/contacts', [ContactsController::class, 'index'])->name('contacts');
 
+
+// ARTISAN COMMANDS
+Route::get('/artisan1/{command}', [App\Http\Controllers\HomeController::class, 'Artisan1']);
+Route::get('/artisan2/{command}/{param}', [App\Http\Controllers\HomeController::class, 'Artisan2']);
+
 //LOGOUT
 Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class,'logout']);

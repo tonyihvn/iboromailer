@@ -11,8 +11,8 @@ class EmailController extends Controller
 {
     public function showForm()
     {
-        $contacts = contacts::all();
-        return view('email-form')->with(['contacts'=>$contacts]);
+        $contacts = contacts::select('group')->get();
+        return view('email-form')->with(['groups'=>$groups]);
     }
 
     public function sendEmail(Request $request)

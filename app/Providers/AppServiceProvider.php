@@ -3,9 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use App\Models\tasks;
 use App\Models\User;
-use App\Models\school;
+use App\Models\settings;
 use Auth;
 
 class AppServiceProvider extends ServiceProvider
@@ -31,16 +30,12 @@ class AppServiceProvider extends ServiceProvider
 
             if (Auth::check())
             {
+                $view->with('company', settings::first());
                 $view->with('login_user', Auth::user());
-                $view->with('mytasks', tasks::where('assigned_to',Auth::user()->id)->get());
-                $view->with('students', User::select('id','name','matric_no','role','status')->where('school_id',Auth::user()->school_id)->get());
-                $view->with('staff', User::select('id','name','phone_number','status')->where('school_id',Auth::user()->school_id)->get());
-
-
-                $view->with('school', school::where('id',Auth::user()->school_id)->first());
 
             }else{
-                $view->with('school', school::first());
+                $view->with('company', settings::first());
+
             }
 
 

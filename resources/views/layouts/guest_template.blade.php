@@ -4,17 +4,19 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Library Manager | Sign up</title>
+    <title>Iboto Empire</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
-    <!-- icheck bootstrap -->
+
     <link rel="stylesheet" href="{{ asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{{ asset('dist/css/jquery.datetimepicker.css') }}">
     <style>
         .register-box {
             width: 40% !important;
@@ -25,30 +27,45 @@
 <body class="hold-transition register-page">
     <div class="register-box">
         <div class="register-logo">
-            <a href="../../index2.html"><b>Library</b>Manager</a>
+            <a href="/"><b>Iboto</b>Empire</a>
         </div>
 
         <div class="card">
             <div class="card-body register-card-body">
-                <p class="login-box-msg">Sign up</p>
-
+                <!-----------------------------START YIELD PAGE CONTENT -->
+                @if (Session::get('message'))
+                    <div class="alert alert-success alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                aria-hidden="true">×</span></button>
+                        <i class="fa fa-check-circle"></i> {!! Session::get('message') !!}
+                    </div>
+                @endif
                 @yield('content')
 
 
-
-                <a href="{{ url('/login') }}" class="text-center">I already have an account</a>
             </div>
             <!-- /.form-box -->
         </div><!-- /.card -->
     </div>
     <!-- /.register-box -->
 
-    <!-- jQuery -->
-    <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
-    <!-- Bootstrap 4 -->
-    <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <!-- AdminLTE App -->
-    <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
+      <!-- jQuery -->
+      <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+      <script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
+      <!-- jQuery UI 1.11.4 -->
+   <!-- Tempusdominus Bootstrap 4 -->
+   <script src="{{ asset('dist/js/jquery.datetimepicker.full.js') }}"></script>
+
+
+        <script>
+            $(function() {
+
+                $('.datepicker').datetimepicker({
+                    formatDate:'Y/m/d H:i'
+                });
+
+            });
+        </script>
 </body>
 
 </html>

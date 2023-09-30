@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>LibraryManager | Dashboard</title>
+    <title>IbotoMailer | Dashboard</title>
     <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
 
@@ -46,7 +46,7 @@
 
         <!-- Preloader -->
         <div class="preloader flex-column justify-content-center align-items-center">
-            <img class="animation__shake" src="{{ asset('public/images/' . $school->logo) }}" alt="RealtyPlus"
+            <img class="animation__shake" src="{{ asset('public/images/' . $company->logo) }}" alt="RealtyPlus"
                 height="60" width="60">
         </div>
 
@@ -90,66 +90,6 @@
                         </form>
                     </div>
                 </li>
-
-                <!-- Messages Dropdown Menu -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link" data-toggle="dropdown" href="#">
-                        <i class="far fa-comments"></i>
-                        <span
-                            class="badge badge-danger navbar-badge">{{ $mytasks->where('category', 'Message')->count() }}</span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                        <a href="#" class="dropdown-item">
-                            <!-- Message Start -->
-                            <div class="media">
-                                <img src="{{ asset('public/images/' . $school->logo) }}" alt="User Avatar"
-                                    class="img-size-50 mr-3 img-circle">
-                                <div class="media-body">
-                                    @foreach ($mytasks->where('category', 'Message') as $msg)
-                                        <h3 class="dropdown-item-title">
-                                            {{ $msg->createdBy->name }}
-                                            <span class="float-right text-sm text-danger"><i
-                                                    class="fas fa-star"></i></span>
-                                        </h3>
-                                        <a class="text-sm"
-                                            href="{{ url('task/' . $msg->id) }}">{{ $msg->subject }}</a>
-                                        <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i>
-                                            {{ $msg->created_at }}</p>
-                                    @endforeach
-                                </div>
-                            </div>
-                            <!-- Message End -->
-                        </a>
-                        <div class="dropdown-divider"></div>
-
-                        <a href="{{ url('tasks') }}" class="dropdown-item dropdown-footer">See All Messages</a>
-                    </div>
-                </li>
-                <!-- Notifications Dropdown Menu -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link" data-toggle="dropdown" href="#">
-                        <i class="far fa-bell"></i>
-                        <span
-                            class="badge badge-warning navbar-badge">{{ $mytasks->where('category', 'Notification')->count() }}</span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                        <span
-                            class="dropdown-item dropdown-header">{{ $mytasks->where('category', 'Notification')->count() }}
-                            Notification(s)</span>
-                        <div class="dropdown-divider"></div>
-                        @foreach ($mytasks->where('category', 'Notification') as $noti)
-                            <a href="{{ url('task/' . $noti->id) }}" class="dropdown-item">
-                                <i class="fas fa-envelope mr-2"></i> {{ $noti->subject }}
-                                <span class="float-right text-muted text-sm">{{ $noti->start_date }}
-                                    {{ $noti->start_date == $noti->end_date ? ' ' : $noti->end_date }} </span>
-                            </a>
-                        @endforeach
-
-                        <div class="dropdown-divider"></div>
-
-                        <a href="{{ url('tasks') }}" class="dropdown-item dropdown-footer">See All Notifications</a>
-                    </div>
-                </li>
                 <li class="nav-item">
                     <a class="nav-link" data-widget="fullscreen" href="#" role="button">
                         <i class="fas fa-expand-arrows-alt"></i>
@@ -161,6 +101,7 @@
                         <i class="fas fa-th-large"></i>
                     </a>
                 </li>
+
             </ul>
         </nav>
         <!-- /.navbar -->
@@ -169,9 +110,9 @@
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
             <a href="{{ '/home' }}" class="brand-link">
-                <img src="{{ asset('public/images/' . $school->logo) }}" alt="RealtyPlus"
+                <img src="{{ asset('public/images/' . $company->logo) }}" alt="IbotoMailer"
                     class="brand-image img-circle elevation-3" style="opacity: .8">
-                <span class="brand-text font-weight-light">LibraryManager</span>
+                <span class="brand-text font-weight-light">IbotoMailer</span>
             </a>
 
             <!-- Sidebar -->
@@ -220,28 +161,39 @@
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-book"></i>
                                 <p>
-                                    Books
+                                    Mails
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="{{ url('books') }}" class="nav-link">
+                                    <a href="{{ url('sentmails') }}" class="nav-link">
                                         <i class="far fa-books nav-icon"></i>
-                                        <p>All Books</p>
+                                        <p>All Sent Mails</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ url('new-book') }}" class="nav-link">
+                                    <a href="{{ url('email-form') }}" class="nav-link">
                                         <i class="far fa-add nav-icon"></i>
-                                        <p>New Book</p>
+                                        <p>Send New Mail</p>
                                     </a>
                                 </li>
+                            </ul>
+                        </li>
 
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-list"></i>
+                                <p>
+                                    Responses/Reservations
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="{{ url('checkouts') }}" class="nav-link">
-                                        <i class="far fa-add nav-icon"></i>
-                                        <p>Checkouts</p>
+                                    <a href="{{ url('reservations') }}" class="nav-link">
+                                        <i class="far fa-user nav-icon"></i>
+                                        <p>All Responses</p>
                                     </a>
                                 </li>
 
@@ -252,92 +204,25 @@
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-users"></i>
                                 <p>
-                                    Students
+                                    Clients/Contacts
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="{{ url('students') }}" class="nav-link">
-                                        <i class="far fa-user nav-icon"></i>
-                                        <p>All Students</p>
+                                    <a href="{{ url('contacts') }}" class="nav-link">
+                                        <i class="far fa-books nav-icon"></i>
+                                        <p>All Clients</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ url('new-student') }}" class="nav-link">
-                                        <i class="far fa-user-plus nav-icon"></i>
-                                        <p>New Student</p>
+                                    <a href="{{ url('contact-create') }}" class="nav-link">
+                                        <i class="far fa-add nav-icon"></i>
+                                        <p>Add New Client</p>
                                     </a>
                                 </li>
-
                             </ul>
                         </li>
-
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-user"></i>
-                                <p>
-                                    Users
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-
-                                <li class="nav-item">
-                                    <a href="{{ url('staff') }}" class="nav-link">
-                                        <i class="far fa-user-plus nav-icon"></i>
-                                        <p>Staff/Librarians</p>
-                                    </a>
-                                </li>
-
-                                <li class="nav-item">
-                                    <a href="{{ url('add-staff') }}" class="nav-link">
-                                        <i class="far fa-user-plus nav-icon"></i>
-                                        <p>Add New Staff</p>
-                                    </a>
-                                </li>
-
-                                <li class="nav-item">
-                                    <a href="{{ url('suppliers') }}" class="nav-link">
-                                        <i class="far fa-user-plus nav-icon"></i>
-                                        <p>Suppliers/Vendors</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ url('add-supplier') }}" class="nav-link">
-                                        <i class="far fa-user-plus nav-icon"></i>
-                                        <p>Add New Suppliers</p>
-                                    </a>
-                                </li>
-
-                            </ul>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-tasks"></i>
-                                <p>
-                                    Tasks
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="{{ url('tasks') }}" class="nav-link">
-                                        <i class="far fa-tasks nav-icon"></i>
-                                        <p>View Tasks</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ url('new-task') }}" class="nav-link">
-                                        <i class="far fa-user-plus nav-icon"></i>
-                                        <p>New Task</p>
-                                    </a>
-                                </li>
-
-                            </ul>
-                        </li>
-
 
                         <li class="nav-item">
                             <a href="#" class="nav-link">
@@ -354,23 +239,7 @@
                                         <i class="far fa-settings nav-icon"></i>
                                         <p>System Settings</p>
                                     </a>
-
                                 </li>
-                                <li class="nav-item">
-                                    <a href="{{ url('categories') }}" class="nav-link">
-                                        <i class="far fa-user-plus nav-icon"></i>
-                                        <p>Categories</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ url('barcodes') }}" class="nav-link">
-                                        <i class="far fa-user-plus nav-icon"></i>
-                                        <p>Print Barcodes</p>
-                                    </a>
-                                </li>
-
-
-
                             </ul>
                         </li>
 
@@ -383,22 +252,7 @@
                             </a>
                         </li>
                     </ul>
-                    @if (isset($pagename))
-                        <div class="card" style="padding: 10px; margin-left: 10px; background-color:aquamarine;">
-                            <b>NOTE:</b><br>
-                            <p>You need to create the following Category Group Names: <br>
-                            <ul>
-                                <li>Book Locations</li>
-                                <li>Books</li>
-                                <li>Checkout Plans</li>
-                                <li>Students</li>
-                                <li>Suppliers</li>
-                                <li>Staff</li>
-                                <li>Tasks</li>
-                            </ul>
-                            </p>
-                        </div>
-                    @endif
+
                 </nav>
                 <!-- /.sidebar-menu -->
             </div>
@@ -432,8 +286,8 @@
         </div>
         <!-- /.content-wrapper -->
         <footer class="main-footer">
-            <strong>Copyright &copy; {{ date('Y') }} <a href="">Anthony Nwokoma - NOUN
-                    Project</a>.</strong>
+            <strong>Copyright &copy; {{ date('Y') }} <a href="">Iboto Empire
+                    Mailing System</a>.</strong>
             All rights reserved.
             <div class="float-right d-none d-sm-inline-block">
                 <b>Version</b> 1.1.0
@@ -466,28 +320,28 @@
                         enctype="multipart/form-data">
                         @csrf
 
-                        <input type="hidden" name="id" value="{{ $school->id }}">
+                        <input type="hidden" name="id" value="{{ $company->id }}">
 
-                        <input type="hidden" name="oldlogo" value="{{ $school->logo }}">
+                        <input type="hidden" name="oldlogo" value="{{ $company->logo }}">
 
-                        <input type="hidden" name="oldbackground" value="{{ $school->background }}">
+                        <input type="hidden" name="oldbackground" value="{{ $company->background }}">
 
                         <div class="form-group">
-                            <label for="school_name">SchoolName</label>
+                            <label for="company_name">Company Name</label>
                             <input type="text" name="school_name" id="school_name" class="form-control"
-                                value="{{ $school->school_name }}">
+                                value="{{ $company->company_name }}">
                         </div>
 
                         <div class="form-group">
                             <label for="motto">Motto</label>
                             <input type="text" name="motto" id="motto" class="form-control"
-                                value="{{ $school->motto }}">
+                                value="{{ $company->motto }}">
                         </div>
 
                         <div class="form-group">
                             <label for="address">Address</label>
                             <input type="text" name="address" id="address" class="form-control"
-                                value="{{ $school->address }}">
+                                value="{{ $company->address }}">
                         </div>
 
 
@@ -506,25 +360,13 @@
                         <div class="form-group">
                             <label for="color">Choose System Colour</label>
                             <input type="color" name="color" id="color" class="form-control"
-                                value="{{ $school->color }}">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="user_id" class="control-label ">Admin User</label>
-                            <select class="form-control" name="user_id" id="user_id">
-                                <option value="{{ $school->user_id }}" selected>{{ $school->user->name }}
-                                </option>
-                                @foreach ($staff as $hm)
-                                    <option value="{{ $hm->id }}">{{ $hm->name }}</option>
-                                @endforeach
-
-                            </select>
+                                value="{{ $company->color }}">
                         </div>
 
                         <div class="form-group">
                             <label for="mode">Mode</label>
                             <select class="form-control" name="mode" id="mode">
-                                <option value="{{ $school->mode }}">{{ $school->mode }}</option>
+                                <option value="{{ $company->mode }}">{{ $company->mode }}</option>
                                 <option value="Active" selected>Active</option>
                                 <option value="Maintenance">Maintenance</option>
                             </select>
@@ -587,7 +429,7 @@
         $(function() {
 
             $('.date').datetimepicker({
-                format: 'YYYY-MM-DD'
+                format: 'YYYY-MM-DD H:m:s'
             });
 
             $('.select2').select2();
@@ -595,48 +437,6 @@
             $('.wyswygeditor').summernote()
 
         });
-
-        function category(accid) {
-            var title = $('#ach' + accid).attr("data-title");
-            var group_name = $('#ach' + accid).attr("data-group_name");
-            var description = $('#ach' + accid).attr("data-description");
-            var school_id = $('#ach' + accid).attr("data-school_id");
-
-
-            $('#id').val(accid);
-            $('#title').val(title);
-            $('#group_name').val(group_name).attr("selected", "selected");
-            $('#description').val(description);
-            $('#catbutton').html("Update Category");
-            $('#school_id').val(school_id);
-
-        }
-
-        // ADD MATERIAL CHECKOUT
-        $(".add_item").click(function() {
-            // alert("Am here!");
-            // $(".spechead").show();
-            var item_class = $(".add_item").attr("id");
-            var old_class = parseFloat(item_class);
-            new_class = old_class + 1;
-            $(".add_item").prop('id', new_class);
-
-            $("#1").clone().attr('id', new_class).appendTo("#item_list");
-            $("#" + new_class + " a").prop('id', "re" + new_class);
-
-            // $("table tbody#item_list").append("<tr scope='row' class='row"+new_class+"'><td class='input-field'><input type='text' name='property[]' value='' placeholder='e.g. Color, Brand etc'></td><td class='input-field'><td class='input-field'><input type='text' name='value[]' value='' placeholder='e.g. Red, HP etc'></td><td><a href='#' class='btn-floating red btn-small delpos' onClick='delRow("+new_class+")'><i class='small material-icons'>remove</i></a></td></tr>");
-
-        });
-
-        $(document.body).on('click', '.removeitem', function(event) {
-
-            var item_id = $(this).attr("id");
-            item_id = item_id.substr(2);
-
-            $("#" + item_id).remove();
-            $("#itrow" + item_id).remove();
-        });
-
         // ADD STAFF CHECKOUT
         $(".adds_item").click(function() {
             var item_class = $(".adds_item").attr("id");
@@ -677,7 +477,7 @@
         });
     </script>
 
-    @if (isset($pagetype) && $pagetype == 'Table')
+    @if (isset($pagetype) && $pagetype == 'Table' || isset($pagetype) && $pagetype == 'Dashboard')
         <script src="{{ asset('plugins/datatables/jquery.dataTables.min.js') }}"></script>
         <script src="{{ asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
         <script src="{{ asset('plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>

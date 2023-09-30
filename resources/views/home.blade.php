@@ -13,7 +13,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Member Dashboard</li>
+                        <li class="breadcrumb-item active">Admin Dashboard</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -29,14 +29,14 @@
                     <!-- small box -->
                     <div class="small-box bg-info">
                         <div class="inner">
-                            <h3>{{ $books->count() }}</h3>
+                            <h3>{{ $sentmails->count() }}</h3>
 
-                            <p>Books</p>
+                            <p>Total Sent Mails</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-persons"></i>
                         </div>
-                        <a href="{{ url('books') }}" class="small-box-footer">View All Books <i
+                        <a href="{{ url('sentmails') }}" class="small-box-footer">View All Mails <i
                                 class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
@@ -46,14 +46,31 @@
                     <!-- small box -->
                     <div class="small-box bg-warning">
                         <div class="inner">
-                            <h3>{{ $students->count() }}</h3>
+                            @php
+                                $totalrecipients = 0;
+                            @endphp
+                            @isset($sentmails)
+                                @php
 
-                            <p>Students</p>
+                                    $recipients = "";
+                                    foreach ($sentmails as $mail) {
+                                        $recipients.=$mail->recipients.",";
+                                    }
+                                    $allrecip = explode(",",rtrim($recipients, ","));
+
+                                    $allrec = array_unique($allrecip);
+                                    $totalrecipients = count($allrec);
+                                @endphp
+                            @endisset
+
+                            <h3>{{ $totalrecipients }}</h3>
+
+                            <p>Total # Recipients</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-person-add"></i>
                         </div>
-                        <a href="{{ url('students') }}" class="small-box-footer">View All <i
+                        <a href="{{ url('sentmails') }}" class="small-box-footer">View All <i
                                 class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
@@ -64,67 +81,67 @@
                     <!-- small box -->
                     <div class="small-box bg-success">
                         <div class="inner">
-                            <h3>{{ $checkouts->where('status', 'Checkedout')->count() }}
+                            <h3>{{ $sentmails->unique('category')->count() }}
                             </h3>
 
-                            <p>Book Checkouts</p>
+                            <p>Mail Categories</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-stats-bars"></i>
                         </div>
-                        <a href="{{ url('projects') }}" class="small-box-footer">More info <i
+                        <a href="{{ url('sentmails') }}" class="small-box-footer">More info <i
                                 class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
 
+                <!-- ./col -->
                 <div class="col-lg-3 col-6">
                     <!-- small box -->
                     <div class="small-box bg-danger">
                         <div class="inner">
-                            <h3>{{ $mytasks->where('status', '!=', 'Completed')->count() }}</h3>
+                            <h3>{{ $reservations->count() }}
+                            </h3>
 
-                            <p>Tasks & Messages</p>
+                            <p># of Reservations</p>
                         </div>
                         <div class="icon">
-                            <i class="ion ion-pie-graph"></i>
+                            <i class="ion ion-stats-bars"></i>
                         </div>
-                        <a href="{{ url('tasks') }}" class="small-box-footer">View all <i
+                        <a href="{{ url('reservations') }}" class="small-box-footer">View All <i
                                 class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
-                <!-- ./col -->
             </div>
             <!-- /.row -->
-            <h3>Search For Books</h3>
-
-            <form action="{{ url('searchByISBN') }}" method="post">
-                @csrf
-                <div class="row" style="align-content: center;">
-                    <div class="form-group col-md-4 col-md-offset-2">
-                        <input type="text" id="isbn_no" name="isbn_no" value="" placeholder="Search for Books"
-                            class="form-control" autofocus>
-                    </div>
-                    <div class="form-group col-md-2">
-                        <input type="submit" value="Search" class="btn btn-primary">
-                    </div>
-                </div>
-            </form>
-
+            <h3>RECENT SENT MAILS</h3>
             <div id="container" class="row">
-                @foreach ($books as $bk)
-                    <div class="card col-md-3">
-                        <img class="card-img-top" src="{{ asset('public/files/' . $bk->image) }}" alt="Card image"
-                            style=" height: 200px;">
-                        <div class="card-body" style="text-align: center !important">
-                            <h6 style="text-align: center !important"><b>{{ $bk->title }}</b></h6>
-                            <p class="card-text"><i>{{ $bk->subtitle }}</i></p>
-                            <div class="btn-group">
-                                <a href="{{ url('book/' . $bk->id) }}" class="btn btn-xs btn-primary">View Details</a>
-                                <a href="{{ url('checkout/' . $bk->id) }}" class="btn btn-xs btn-success">Checkout</a>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
+                <div class="card-body" style="overflow: auto;">
+                <table class="table responsive-table" id="products" style="width: 100% !important;">
+                    <thead>
+                        <tr>
+
+                            <th style="width: 20% !important;">Title</th>
+                            <th>Recipients</th>
+                            <th>Category</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($sentmails as $sm)
+                            <tr>
+
+                                <td><b>{{ $sm->title }}</b></td>
+                                <td>{{ $sm->recipients }}</td>
+                                <td>{{ $sm->category }}</td>
+                                <td>{{ $sm->status }}</td>
+                            </tr>
+                        @endforeach
+
+
+                    </tbody>
+                </table>
+                </div>
+
             </div>
         </div><!-- /.container-fluid -->
     </section>

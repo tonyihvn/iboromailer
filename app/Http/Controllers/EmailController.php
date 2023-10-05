@@ -84,6 +84,7 @@ class EmailController extends Controller
                 'content' => $request->email_content,
                 'url' => $request->url,
                 'top_image' => $filename,
+                'bgcolor'=>$request->bgcolor,
                 'bottom_image' => $filename2,
                 'linkText' => $request->linkText
             ], function ($message) use ($recipient, $request, $filename, $filename2) {

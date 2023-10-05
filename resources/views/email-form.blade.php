@@ -34,14 +34,14 @@
 
 
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-5">
                 <div class="form-group">
                     <label for="top_image">Top Image:</label>
                     <input type="file" name="top_image" accept="image/*">
                 </div>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-5">
                 <label for="mail_category" class="form-label">Mail Category</label>
                 <select class="form-select form-control" id="mail_category" name="mail_category" >
                     <option value="Events">Events</option>
@@ -52,7 +52,12 @@
                     <option value="Reminder">Reminder</option>
                 </select>
             </div>
-
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="bgcolor">Background Color:</label>
+                    <input type="color" class="form-control" name="bgcolor" value="#EAE5C8">
+                </div>
+            </div>
 
         </div>
 
@@ -82,8 +87,9 @@
             <label for="bottom_image">Bottom Image:</label>
             <input type="file" name="bottom_image" accept="image/*">
         </div>
-
-        <button type="submit" class="btn btn-primary">Send Email</button>
+        <div style="float: right;">
+            <button type="submit" class="btn btn-primary">Send Email</button>
+        </div>
     </form>
 </div>
 @endsection

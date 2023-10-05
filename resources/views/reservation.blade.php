@@ -34,7 +34,7 @@
 
         <div class="mb-3">
             <label for="title" class="form-label">Event</label>
-            <input type="text" class="form-control" id="title" name="title" >
+            <input type="text" class="form-control" id="title" name="title" value="The Groundwork of Skill Acquisition and Development Book Launch">
         </div>
 
         <div class="mb-3">

@@ -11,6 +11,7 @@ class ReservationController extends Controller
 {
     public function index(){
         $reservations = Reservation::all();
+
         return view('reservations')->with(['reservations'=>$reservations]);
     }
     public function create()

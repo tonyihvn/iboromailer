@@ -16,7 +16,7 @@
                 <select class="form-select form-control" id="contact_group" name="contact_group" >
                     <option value="Events" selected>Select Group</option>
                     @if (isset($groups))
-                        @foreach ($groups as $gr)
+                        @foreach ($groups->unique('group') as $gr)
                             <option value="{{$gr->group}}">{{$gr->group}}</option>
                         @endforeach
                     @endif

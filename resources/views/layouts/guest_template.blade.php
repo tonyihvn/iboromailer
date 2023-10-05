@@ -17,21 +17,17 @@
     <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('dist/css/jquery.datetimepicker.css') }}">
-    <style>
-        .register-box {
-            width: 40% !important;
-        }
-    </style>
+
 </head>
 
 <body class="hold-transition register-page">
-    <div class="register-box">
+    <div>
         <div class="register-logo">
             <a href="/"><b>Iboto</b>Empire</a>
         </div>
 
         <div class="card">
-            <div class="card-body register-card-body">
+            <div class="card-body">
                 <!-----------------------------START YIELD PAGE CONTENT -->
                 @if (Session::get('message'))
                     <div class="alert alert-success alert-dismissible" role="alert">

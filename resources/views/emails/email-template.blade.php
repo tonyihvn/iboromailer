@@ -4,7 +4,6 @@
     <title>{{ $title }}</title>
 </head>
 <body>
-
     <div style="background-color:#C8BF8A !important; position:relative;max-width:94%; padding: 3%;">
         @if ($top_image!="")
             <img src="{{ env('APP_URL') }}/public/images/{{ $top_image }}" alt="IBOTO EMPIRE"  style="width: 100%; height: auto; position: relative;">

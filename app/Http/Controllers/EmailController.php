@@ -20,14 +20,16 @@ class EmailController extends Controller
         // Validate the form data
         $request->validate([
             'title' => 'required',
-            'url' => 'url',
-            'top_image' => 'image|mimes:jpeg,png,jpg,gif|max:8048',
-            'bottom_image' => 'image|mimes:jpeg,png,jpg,gif|max:8048'
+            'recipients'=>'required'
         ]);
             $filename = "";
             $filename2 = "";
 
             if($request->hasFile('top_image')){
+
+                $request->validate([
+                     'top_image' => 'image|mimes:jpeg,png,jpg,gif|max:8048'
+                ]);
 
                 // Upload images top and bottom
                 // Get the uploaded file from the request
@@ -49,6 +51,9 @@ class EmailController extends Controller
             }
 
             if($request->hasFile('bottom_image')){
+                $request->validate([
+                    'bottom_image' => 'image|mimes:jpeg,png,jpg,gif|max:8048'
+               ]);
 
                 // Upload bottom image
                 // Get the uploaded file from the request

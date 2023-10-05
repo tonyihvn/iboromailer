@@ -25,8 +25,8 @@
         <div class="container-fluid">
             <div id="container" class="row">
                 <div class="card-body" style="overflow: auto;">
-                    <p>You can download a copy of the guide here.</p>
-                    <p><a href="{{url('/images/SOP.pdf')}}" class="btn btn-primary">Click Here to Get a Copy of the SOP Guide (in .PDF)</a></p>
+                    <p>You can download a copy of the users guide here.</p>
+                    <p><a href="{{url('/public/images/SOP.pdf')}}" class="btn btn-primary">Click Here to Get a Copy of the SOP Guide (in .PDF)</a></p>
                 </div>
 
             </div>

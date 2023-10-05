@@ -39,6 +39,7 @@ Route::post('/reservation', [ReservationController::class, 'store'])->name('rese
 Route::get('/contact-create', [ContactsController::class, 'create'])->name('contact-create');
 Route::post('/savecontacts', [ContactsController::class, 'store'])->name('savecontacts');
 Route::get('/contacts', [ContactsController::class, 'index'])->name('contacts');
+Route::get('/help', [App\Http\Controllers\HomeController::class, 'help'])->name('help');
 
 
 // ARTISAN COMMANDS

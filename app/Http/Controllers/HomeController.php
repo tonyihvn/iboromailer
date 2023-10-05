@@ -90,6 +90,10 @@ class HomeController extends Controller
         return dd($output);
     }
 
+    public function help() {
+        return view('help');
+    }
+
 
 
 }

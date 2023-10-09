@@ -19,6 +19,7 @@
                         @foreach ($groups->unique('group') as $gr)
                             <option value="{{$gr->group}}">{{$gr->group}}</option>
                         @endforeach
+                        <option value="Community">Community</option>
                     @endif
                 </select>
             </div>
@@ -50,6 +51,7 @@
                     <option value="Goodwill">Goodwill</option>
                     <option value="Announcement">Announcement</option>
                     <option value="Reminder">Reminder</option>
+                    <option value="Scholarship">Scholarship</option>
                 </select>
             </div>
             <div class="col-md-2">

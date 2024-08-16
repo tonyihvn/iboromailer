@@ -4,6 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <title>IbotoMailer | Dashboard</title>
     <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
@@ -434,9 +436,94 @@
 
             $('.select2').select2();
 
-            $('.wyswygeditor').summernote()
+            $('.wyswygeditor').summernote({
+                height: 300, // Set the height of the editor
 
+                toolbar: [
+                    ['style', ['undo','redo','style']], // Style dropdown (e.g., paragraph, code)
+                    ['font', ['bold', 'italic', 'underline', 'clear','strikethrough', 'superscript', 'subscript']], // Font style (bold, italic, underline)
+                    ['fontname', ['fontname']], // Font family
+                    ['fontsize', ['fontsize']], // Font size
+                    ['fontsizeunit', ['fontsizeunit']], // Font size
+                    ['color', ['forecolor', 'backcolor']], // Text color and background color
+                    ['para', ['ul', 'ol', 'paragraph']], // Lists (unordered, ordered), paragraph formatting
+                    ['height', ['height']], // Line height
+                    ['table', ['table']], // Insert table
+                    ['insert', ['link', 'picture', 'video', 'hr']], // Insert links, images, videos, horizontal rule
+                    ['view', ['fullscreen', 'codeview','help']], // Fullscreen mode, code view, help
+                ],
+                popover: {
+                    image: [
+                        ['image', ['resizeFull', 'resizeHalf', 'resizeQuarter', 'resizeNone']],
+                        ['float', ['floatLeft', 'floatRight', 'floatNone']],
+                        ['remove', ['removeMedia']]
+                    ],
+                    link: [
+                        ['link', ['linkDialogShow', 'unlink']]
+                    ],
+                    table: [
+                        ['add', ['addRowDown', 'addRowUp', 'addColLeft', 'addColRight']],
+                        ['delete', ['deleteRow', 'deleteCol', 'deleteTable']],
+                    ],
+                    air: [
+                        ['color', ['color']],
+                        ['font', ['bold', 'underline', 'clear']],
+                        ['para', ['ul', 'paragraph']],
+                        ['table', ['table']],
+                        ['insert', ['link', 'picture']]
+                    ]
+                },
+                callbacks: {
+                    onImageUpload: function(files) {
+                        uploadImage(files[0]);
+                    }
+
+                    // onImageUpload: function(files) {
+                    //     // Handle image upload here
+                    //     for (let i = 0; i < files.length; i++) {
+                    //         const file = files[i];
+                    //         const reader = new FileReader();
+
+                    //         reader.onload = function(e) {
+                    //             const img = document.createElement('img');
+                    //             img.src = e.target.result;
+                    //             img.classList.add('summernote-image');
+
+                    //             // Insert the image into the Summernote editor
+                    //             $('.wyswygeditor').summernote('insertNode', img);
+                    //         };
+
+                    //         reader.readAsDataURL(file);
+                    //     }
+                    // }
+                }
+            });
         });
+
+        function uploadImage(file) {
+            var formData = new FormData();
+            formData.append('image', file);
+
+            $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+            });
+
+            $.ajax({
+                url: "{{ route('upload-image') }}",
+                method: 'POST',
+                data: formData.append("_token", "{{ csrf_token() }}"),
+                contentType: false,
+                processData: true,
+                success: function(url) {
+                    $('.wyswygeditor').summernote('insertImage', url);
+                },
+                error: function(data) {
+                    console.error(data);
+                }
+            });
+        }
         // ADD STAFF CHECKOUT
         $(".adds_item").click(function() {
             var item_class = $(".adds_item").attr("id");

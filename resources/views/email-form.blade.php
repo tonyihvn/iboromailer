@@ -31,8 +31,10 @@
             <input type="text" name="title" class="form-control" required>
         </div>
 
-
-
+        <div class="form-group">
+            <label for="sender_name">Sender Name:</label>
+            <input type="text" name="sender_name" class="form-control" required>
+        </div>
 
         <div class="row">
             <div class="col-md-5">

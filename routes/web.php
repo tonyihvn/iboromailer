@@ -41,6 +41,9 @@ Route::post('/savecontacts', [ContactsController::class, 'store'])->name('saveco
 Route::get('/contacts', [ContactsController::class, 'index'])->name('contacts');
 Route::get('/help', [App\Http\Controllers\HomeController::class, 'help'])->name('help');
 
+//UPLOAD SUMMERNOTE IMAGE
+Route::post('/upload-image', [App\Http\Controllers\EmailController::class, 'uploadImage'])->name('upload-image');
+
 
 // ARTISAN COMMANDS
 Route::get('/artisan1/{command}', [App\Http\Controllers\HomeController::class, 'Artisan1']);

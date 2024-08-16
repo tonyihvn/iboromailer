@@ -88,7 +88,7 @@ class EmailController extends Controller
                 'bottom_image' => $filename2,
                 'linkText' => $request->linkText
             ], function ($message) use ($recipient, $request, $filename, $filename2) {
-                $message->from('admin@ibotoempire.com', 'Jacob Oroks');
+                $message->from('admin@ibotoempire.com', $request->sender_name);
                 $message->to(trim($recipient));
                 $message->subject($request->title);
 
@@ -129,5 +129,23 @@ class EmailController extends Controller
         ]);
 
         return redirect()->back()->with('message', 'Email sent successfully!');
+    }
+
+    public function uploadImage(Request $request)
+    {
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Adjust validation rules as needed
+        ]);
+
+        // Get the uploaded image
+        $image = $request->file('image');
+
+        // Store the image in the public storage folder
+        $path = $image->store('public/images');
+
+        // Create a URL for the stored image
+        $imageUrl = asset(str_replace('public/', 'storage/', $path));
+
+        return response()->json($imageUrl);
     }
 }

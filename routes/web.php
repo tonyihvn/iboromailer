@@ -44,6 +44,17 @@ Route::get('/help', [App\Http\Controllers\HomeController::class, 'help'])->name(
 //UPLOAD SUMMERNOTE IMAGE
 Route::post('/upload-image', [App\Http\Controllers\EmailController::class, 'uploadImage'])->name('upload-image');
 
+// EVENTS
+Route::get('/createEvent', [App\Http\Controllers\HomeController::class, 'createEvent'])->name('createEvent')->middleware('role:Super');
+Route::get('/events', [App\Http\Controllers\HomeController::class, 'events'])->name('events')->middleware('role:Super');
+Route::get('/edit-event/{event_id}', [App\Http\Controllers\HomeController::class, 'editEvent'])->name('editEvent')->middleware('role:Super');
+
+Route::get('/event/{event_id}', [App\Http\Controllers\HomeController::class, 'event'])->name('event');
+
+Route::post('/publishEvent', [App\Http\Controllers\HomeController::class, 'publishEvent'])->name('publishEvent')->middleware('role:Super');
+Route::post('/registerEvent', [App\Http\Controllers\HomeController::class, 'registerEvent'])->name('registerEvent')->middleware('role:Super');
+Route::get('/registrations', [App\Http\Controllers\HomeController::class, 'registrations'])->name('registrations')->middleware('role:Super');
+Route::get('/approveRegistration/{reg_id}', [App\Http\Controllers\HomeController::class, 'approveRegistration'])->name('approveRegistration')->middleware('role:Super');
 
 // ARTISAN COMMANDS
 Route::get('/artisan1/{command}', [App\Http\Controllers\HomeController::class, 'Artisan1']);

@@ -13,7 +13,7 @@
             </div>
             <div class="col-md-4">
                 <label for="mail_category" class="form-label">Send to Group</label>
-                <select class="form-select form-control" id="contact_group" name="contact_group" >
+                <select class="form-select form-control" id="contact_group" name="contact_group" style="font-size: 0.8em" >
                     <option value="Events" selected>Select Group</option>
                     @if (isset($groups))
                         @foreach ($groups->unique('group') as $gr)
@@ -85,6 +85,7 @@
                     <input type="text" name="linkText" class="form-control">
                 </div>
             </div>
+
         </div>
 
         <div class="form-group">

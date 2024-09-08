@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>IbotoMailer | Dashboard</title>
+    <title>Iboto Empire</title>
     <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
 
@@ -187,7 +187,7 @@
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-list"></i>
                                 <p>
-                                    Responses/Reservations
+                                    Responses
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
@@ -199,6 +199,30 @@
                                     </a>
                                 </li>
 
+                            </ul>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-star"></i>
+                                <p>
+                                    Events
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ url('events') }}" class="nav-link">
+                                        <i class="far fa-megaphone nav-icon"></i>
+                                        <p>All Events</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ url('registrations') }}" class="nav-link">
+                                        <i class="far fa-add nav-icon"></i>
+                                        <p>Event Registrations</p>
+                                    </a>
+                                </li>
                             </ul>
                         </li>
 

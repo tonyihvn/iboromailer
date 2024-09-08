@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>IbotoMailer | Sign In</title>
+    <title>Iboto Events | Sign In</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -21,7 +21,7 @@
 <body class="hold-transition register-page">
     <div class="col-md-6">
         <div class="register-logo">
-            <a href="#"><b>Iboto</b>Mailer</a>
+            <a href="#"><b>Iboto</b>Events Manager</a>
         </div>
 
         <div class="card">

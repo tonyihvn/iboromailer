@@ -46,7 +46,7 @@
                                 <td><b>{{ $event->title}}</b> <br> {{$event->from." / ".$event->venue }}</td>
 
                                 <td>{{ $event->subtitle }}</td>
-                                <td><a href="{{url('event/'.$event->id)}}" class="btn btn-sm btn-primary">View</a><a href="{{url('edit-event/'.$event->id)}}" class="btn btn-sm btn-secondary">Edit</a></td>
+                                <td><a href="{{url('event/'.$event->id)}}" class="btn btn-sm btn-primary" target="_blank">View</a><a href="{{url('edit-event/'.$event->id)}}" class="btn btn-sm btn-secondary">Edit</a></td>
                             </tr>
                         @endforeach
 

@@ -105,10 +105,16 @@
 
             <div class="row">
 
-                <div class="col-md-2">
+                <div class="col-md-6">
                     <div class="form-group">
                         <label for="bgcolor">Background Color:</label>
-                        <input type="color" class="form-control" name="bgcolor" value="#EAE5C8" value="{{$event->bgcolor}}">
+                        <input type="color" class="form-control" name="bgcolor"  value="{{$event->bgcolor}}">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="textcolor">Text Color:</label>
+                        <input type="color" class="form-control" name="textcolor"  value="{{$event->textcolor}}">
                     </div>
                 </div>
 

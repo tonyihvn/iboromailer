@@ -69,7 +69,14 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
+
                     <li><h1 style="color: white; font-weight: bold; margin-left: 30px; margin-right: 30px; margin-top: 15px;">{{$event->title}}</h1></li>
+                    <li class="nav-item">
+                        <a href="#about_event" class="nav-link">About this Event</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#location" class="nav-link">Location</a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link btn btn-primary" href="#register">Register to Participate</a>
                     </li>

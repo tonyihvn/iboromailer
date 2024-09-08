@@ -7,6 +7,10 @@
         background-color: @php echo $event->bgcolor; @endphp !important;
     }
 
+    p,h1,h2,h3,h4,h5,h6{
+        color: @php echo $event->textcolor; @endphp !important;
+    }
+
     .btn{
         border-color: @php echo $event->bgcolor; @endphp !important;
     }
@@ -85,10 +89,10 @@
 
 
 
-        <div class="row">
+        <div class="row" id="about_event">
             <div class="col-md-8">
-                <div class="row"><h1>{{$event->title}}</h1></div>
-                <div class="row"><h2>{{$event->subtitle}}</h2></div>
+                <div class="row"><h1 style="font-size: 2em; font-weight: bold;">{{$event->title}}</h1></div>
+                <div class="row"><h2>Topic: <b>{{$event->subtitle}}</b></h2></div>
                 <hr>
                 <div class="row"><p>{!!$event->details!!}</p></div>
             </div>
@@ -106,7 +110,7 @@
         </div>
         <hr>
 
-        <div class="row">
+        <div class="row" id="location">
             <div class="col-md-4">
                 <h2><i class="nav-icon fas fa-calendar" style="color: red;"></i> {!! $event->from ? date('jS F, Y', strtotime($event->from)) : '' !!} {!!$event->to ? "<br> to ".date('jS F, Y', strtotime($event->to)) : ""!!}</h2>
                 <hr>

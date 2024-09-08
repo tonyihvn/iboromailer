@@ -104,10 +104,17 @@
         <div class="row">
 
 
-            <div class="col-md-2">
+            <div class="col-md-6">
                 <div class="form-group">
                     <label for="bgcolor">Background Color:</label>
                     <input type="color" class="form-control" name="bgcolor" value="#EAE5C8">
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="textcolor">Text Color:</label>
+                    <input type="color" class="form-control" name="textcolor" value="#000000">
                 </div>
             </div>
 

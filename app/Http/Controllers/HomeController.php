@@ -115,6 +115,7 @@ class HomeController extends Controller
             'to' => $request->to,
             'venue'=>$request->venue,
             'bgcolor'=>$request->bgcolor,
+            'textcolor'=>$request->textcolor,
             'more_info'=>$request->more_info,
 
             'slide1'=>$slide1,

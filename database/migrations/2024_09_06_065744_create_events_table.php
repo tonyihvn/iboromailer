@@ -35,6 +35,8 @@ class CreateEventsTable extends Migration
             $table->string('url',300)->nullable();
             $table->string('linkText',50)->nullable();
             $table->text('map_location')->nullable();
+            $table->text('postevent_detail')->nullable();
+            $table->string('status',30)->nullable();
 
             $table->timestamps();
         });

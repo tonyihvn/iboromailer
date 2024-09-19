@@ -10,6 +10,9 @@ use App\Models\settings;
 use App\Models\events;
 use App\Models\registrations;
 use App\Models\contacts;
+use App\Models\resources;
+use Illuminate\Support\Facades\File;
+
 // To be used for registration
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -53,6 +56,8 @@ class HomeController extends Controller
             $flyer1 = $event->flyer1;
             $flyer2 = $event->flyer2;
             $flyer3 = $event->flyer3;
+            $status = $request->status;
+            $postevent_detail = $request->postevent_detail;
             $message = "Event Updated Successfully!";
         }else{
             $event_id = 0;
@@ -64,6 +69,8 @@ class HomeController extends Controller
             $flyer2 = '';
             $flyer3 = '';
             $message = "New Event Created!";
+            $status = "";
+            $postevent_detail = $request->postevent_detail;
         }
 
         if(!empty($request->file('slide1'))){
@@ -100,6 +107,7 @@ class HomeController extends Controller
 
             $request->flyer2->move(\public_path('images-event'),$flyer2);
         }
+
         if(!empty($request->file('flyer3'))){
 
             $flyer3 = time().'.'.$request->flyer3->extension();
@@ -125,11 +133,60 @@ class HomeController extends Controller
             'flyer1'=>$flyer1,
             'flyer2'=>$flyer2,
             'flyer3'=>$flyer3,
+
             'url'=>$request->url,
             'linkText'=>$request->linkText,
-            'map_location'=>$request->map_location
+            'map_location'=>$request->map_location,
+            'postevent_detail' => $postevent_detail,
+            'status' => $status
         ]);
 
+        return redirect()->back()->with(['message'=>$message]);
+
+    }
+
+    public function publishPostEvent(request $request){
+
+
+        // Validate the request data
+        $request->validate([
+            'resources.*' => 'required|file|mimes:pdf,doc,docx,jpg,jpeg,png', // Adjust MIME types as needed
+        ]);
+
+        $files = $request->file('materials');
+        $gallery = $request->file('gallery');
+        $destinationPath = public_path('images-event/'.$request->event_id);
+
+        if (!is_dir($destinationPath)) {
+            mkdir($destinationPath, 0777, true);
+        }
+
+        if(!empty($files)){
+            foreach ($files as $file) {
+                $fileName = time() . '_' . $file->getClientOriginalName();
+                $file->move($destinationPath, $fileName);
+
+                resources::updateOrCreate(['material_name'=>$fileName],[
+                    'material_name' => $fileName,
+                    'event_id' => $request->event_id
+                ]);
+            }
+        }
+
+        if(!empty($gallery)){
+            foreach ($gallery as $file) {
+                $fileName = time() . '_' . $file->getClientOriginalName();
+                $file->move($destinationPath, $fileName);
+            }
+        }
+
+        events::updateOrCreate(['id'=>$request->event_id],[
+            'postevent_detail' => $request->postevent_detail,
+            'status' => 'Past'
+        ]);
+
+
+        $message = "The Post Event Content was published successfully.";
         return redirect()->back()->with(['message'=>$message]);
 
     }
@@ -182,6 +239,13 @@ class HomeController extends Controller
         return view('edit-event', compact('event'));
     }
 
+    public function addPostEvent($event_id)
+    {
+        return view('postevent-form', compact('event_id'));
+    }
+
+
+
     public function eventRegistrations()
     {
         $registrations = registrations::where('event_id',$event_id)->get();
@@ -198,8 +262,27 @@ class HomeController extends Controller
 
     public function event($event_id)
     {
+        // $folderPath = public_path('images-event/'.$event_id);
+
+        // // Get all image files (jpg, jpeg, png) from the folder
+        // $images = File::files($folderPath);
+
+        // // Filter images by extension
+        // $imageFiles = array_filter($images, function ($file) {
+        //     return in_array(strtolower($file->getExtension()), ['jpg', 'jpeg', 'png']);
+        // });
+
+
+        $directory = public_path('images-event/'.$event_id); // Assuming the images are in public/images/gallery
+        $images = glob($directory . '/*.{jpg,jpeg,png,gif}', GLOB_BRACE); // Get all images
+
+        // Strip the base directory path for displaying in view
+        $images = array_map(function ($image) {
+            return str_replace(public_path(), 'public/', $image); // Remove 'public_path' part for display
+        }, $images);
+
         $event = events::where('id',$event_id)->first();
-        return view('event', compact('event'));
+        return view('event', compact('event','images'));
     }
 
     public function approveRegistration($reg_id)

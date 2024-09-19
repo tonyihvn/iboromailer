@@ -15,4 +15,9 @@ class events extends Model
     {
         return $this->hasMany('App\registrations','event_id','id');
     }
+
+    public function resources()
+    {
+        return $this->hasMany('App\Models\resources','event_id','id');
+    }
 }

@@ -50,6 +50,9 @@ Route::get('/events', [App\Http\Controllers\HomeController::class, 'events'])->n
 Route::get('/edit-event/{event_id}', [App\Http\Controllers\HomeController::class, 'editEvent'])->name('editEvent')->middleware('role:Super');
 
 Route::get('/event/{event_id}', [App\Http\Controllers\HomeController::class, 'event'])->name('event');
+Route::get('/postevent/{event_id}', [App\Http\Controllers\HomeController::class, 'addPostEvent'])->name('postevent');
+Route::post('/publishPostEvent', [App\Http\Controllers\HomeController::class, 'publishPostEvent'])->name('publishPostEvent')->middleware('role:Super');
+
 
 Route::post('/publishEvent', [App\Http\Controllers\HomeController::class, 'publishEvent'])->name('publishEvent')->middleware('role:Super');
 Route::post('/registerEvent', [App\Http\Controllers\HomeController::class, 'registerEvent'])->name('registerEvent')->middleware('role:Super');

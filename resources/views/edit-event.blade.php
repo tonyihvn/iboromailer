@@ -145,9 +145,26 @@
                     </div>
                 </div>
             </div>
+            <hr>
 
-            <div style="float: right;">
-                <button type="submit" class="btn btn-primary">Update Event</button>
+            <div class="row">
+                <div class="form-group">
+                    <label for="postevent_detail">Post Event Detail</label>
+                    <textarea name="postevent_detail" class="form-control wyswygeditor">{!! $event->postevent_detail!!}</textarea>
+                </div>
+            </div>
+
+            <div>
+                <div class="col-md-4 form-group">
+                    <select name="status" id="status">
+                        <option value="{{$event->status}}" selected>{{$event->status}}</option>
+                        <option value="Past">Past</option>
+                        <option value="">Upcoming</option>
+                    </select>
+                </div>
+                <div class="col-md-8" style="float: right;">
+                    <button type="submit" class="btn btn-primary">Update Event</button>
+                </div>
             </div>
         </form>
     @endisset

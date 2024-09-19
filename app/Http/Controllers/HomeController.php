@@ -262,16 +262,6 @@ class HomeController extends Controller
 
     public function event($event_id)
     {
-        // $folderPath = public_path('images-event/'.$event_id);
-
-        // // Get all image files (jpg, jpeg, png) from the folder
-        // $images = File::files($folderPath);
-
-        // // Filter images by extension
-        // $imageFiles = array_filter($images, function ($file) {
-        //     return in_array(strtolower($file->getExtension()), ['jpg', 'jpeg', 'png']);
-        // });
-
 
         $directory = public_path('images-event/'.$event_id); // Assuming the images are in public/images/gallery
         $images = glob($directory . '/*.{jpg,jpeg,png,gif}', GLOB_BRACE); // Get all images
@@ -290,6 +280,14 @@ class HomeController extends Controller
         registrations::where('id',$reg_id)->update(['approval'=>'Approved']);
 
         $message = "The event registration has been approved.";
+        return redirect()->back()->with(['message'=>$message]);
+    }
+
+    public function deleteEvent($event_id)
+    {
+        events::find($event_id)->delete();
+
+        $message = "The event has been deleted successfully.";
         return redirect()->back()->with(['message'=>$message]);
     }
 

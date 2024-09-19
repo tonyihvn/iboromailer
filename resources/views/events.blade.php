@@ -50,6 +50,7 @@
                                     <a href="{{url('event/'.$event->id)}}" class="btn btn-sm btn-primary" target="_blank">View</a>
                                     <a href="{{url('edit-event/'.$event->id)}}" class="btn btn-sm btn-secondary">Edit</a>
                                     <a href="{{url('postevent/'.$event->id)}}" class="btn btn-sm btn-success">After Event</a>
+                                    <a href="{{url('deleteEvent/'.$event->id)}}" class="btn btn-sm btn-danger" onclick="confirm('Are you sure you delete this event?')">Delete</a>
                                 </td>
 
                             </tr>

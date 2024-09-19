@@ -20,6 +20,14 @@ class SentmailsController extends Controller
         return view('sentmails')->with(['sentmails'=>$sentmails]);
     }
 
+    public function deleteMail($email_id)
+    {
+        sentmails::find($email_id)->delete();
+
+        $message = "The email has been deleted successfully.";
+        return redirect()->back()->with(['message'=>$message]);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

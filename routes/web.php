@@ -28,6 +28,7 @@ Route::post('/send-email', [App\Http\Controllers\EmailController::class, 'sendEm
 
 Route::get('/sentmails', [App\Http\Controllers\SentmailsController::class, 'index'])->name('sentmails');
 Route::get('/mail/{mid}', [App\Http\Controllers\SentmailsController::class, 'mail'])->name('mail');
+Route::get('/deleteMail/{sent_id}', [App\Http\Controllers\SentmailsController::class, 'deleteMail'])->name('deleteMail')->middleware('role:Super');
 
 Route::get('/reservations', [App\Http\Controllers\ReservationController::class, 'index'])->name('reservations');
 
@@ -52,6 +53,7 @@ Route::get('/edit-event/{event_id}', [App\Http\Controllers\HomeController::class
 Route::get('/event/{event_id}', [App\Http\Controllers\HomeController::class, 'event'])->name('event');
 Route::get('/postevent/{event_id}', [App\Http\Controllers\HomeController::class, 'addPostEvent'])->name('postevent');
 Route::post('/publishPostEvent', [App\Http\Controllers\HomeController::class, 'publishPostEvent'])->name('publishPostEvent')->middleware('role:Super');
+Route::get('/deleteEvent/{event_id}', [App\Http\Controllers\HomeController::class, 'deleteEvent'])->name('deleteEvent')->middleware('role:Super');
 
 
 Route::post('/publishEvent', [App\Http\Controllers\HomeController::class, 'publishEvent'])->name('publishEvent')->middleware('role:Super');

@@ -45,7 +45,10 @@
                                 <td>{{ $sm->recipients }}</td>
                                 <td>{{ $sm->category }}</td>
                                 <td>{{ $sm->status }}</td>
-                                <td><a href="{{url('mail/'.$sm->id)}}" class="btn btn-sm btn-primary">View</a></td>
+                                <td class="btn-group">
+                                    <a href="{{url('mail/'.$sm->id)}}" class="btn btn-sm btn-primary">View</a>
+                                    <a href="{{url('deleteMail/'.$sm->id)}}" class="btn btn-sm btn-danger" onclick="confirm('Are you sure you delete this Sent Mail Record?')">Delete</a>
+                                </td>
                             </tr>
                         @endforeach
 

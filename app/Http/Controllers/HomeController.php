@@ -39,9 +39,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $reservations = Reservation::select('id','title','full_name')->get();
+        $events = events::select('id')->get();
         $sentmails = sentmails::select('id','recipients','title','category','status')->get();
-        return view('home')->with(['reservations'=>$reservations,'sentmails'=>$sentmails]);
+        return view('home')->with(['events'=>$events,'sentmails'=>$sentmails]);
     }
 
     public function publishEvent(request $request){
@@ -283,11 +283,52 @@ class HomeController extends Controller
         return redirect()->back()->with(['message'=>$message]);
     }
 
+    public function users()
+    {
+        $users = User::all();
+
+        return view('users', compact('users'));
+    }
+
+    public function createUser(){
+        return view('user-form');
+    }
+
+    public function addUser(request $request){
+
+        $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|email|unique:users',
+            'password' => 'required'
+        ]);
+
+        User::create([
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'phone_number' => $request->input('phone_number'),
+            'password' => Hash::make($request->input('password')),
+            'role'=> $request->input('role'),
+            'status'=> $request->input('status'),
+        ]);
+
+        $message = "The user account created successfully.";
+        return redirect()->back()->with(['message'=>$message]);
+
+    }
+
     public function deleteEvent($event_id)
     {
         events::find($event_id)->delete();
 
         $message = "The event has been deleted successfully.";
+        return redirect()->back()->with(['message'=>$message]);
+    }
+
+    public function deleteUser($user_id)
+    {
+        User::find($user_id)->delete();
+
+        $message = "The User has been deleted successfully.";
         return redirect()->back()->with(['message'=>$message]);
     }
 

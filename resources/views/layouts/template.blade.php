@@ -234,7 +234,7 @@
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
-                            <ul class="nav nav-treeview">
+                            <ul class="nav nav-treeview  roledlink Super Admin Staff">
                                 <li class="nav-item">
                                     <a href="{{ url('contacts') }}" class="nav-link">
                                         <i class="far fa-books nav-icon"></i>
@@ -259,7 +259,13 @@
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
-                                <li class="nav-item">
+                                <li class="nav-item  roledlink Super">
+                                    <a href="{{ url('userss') }}" class="nav-link">
+                                        <i class="far fa-user nav-icon"></i>
+                                        <p>Users</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item roledlink Super">
                                     <a href="{{ url('settings') }}" class="nav-link" data-toggle="modal"
                                         data-target="#settings">
                                         <i class="far fa-settings nav-icon"></i>
@@ -586,6 +592,17 @@
                 console.log('Failed');
             });
         });
+
+        // MANAGE ROLES AND ACCESS
+		var usrRole = "{{Auth::user()->role ?? ''}}";
+
+		$(".roledlink").hide();
+
+		function protect() {
+			$("." + usrRole).css("visibility", "visible");
+			$("." + usrRole).show();
+		}
+		protect();
     </script>
 
     @if (isset($pagetype) && $pagetype == 'Table' || isset($pagetype) && $pagetype == 'Dashboard')

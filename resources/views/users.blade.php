@@ -8,12 +8,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Sent Mails</h1>
+                    <h1 class="m-0">Users</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Send Mails</li>
+                        <li class="breadcrumb-item active">Users</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -25,30 +25,33 @@
         <div class="container-fluid">
 
             <div id="container" class="row">
+                <div class="row align-content-end">
+                    <a href="{{route('createUser')}}" class="btn btn-primary float-right">Create New User</a>
+                </div>
                 <div class="card-body" style="overflow: auto;">
                 <table class="table responsive-table" id="products" style="width: 100% !important;">
                     <thead>
                         <tr>
 
-                            <th style="width: 20% !important;">Title</th>
-                            <th>Recipients</th>
-                            <th>Category</th>
-                            <th>Status</th>
+                            <th style="width: 20% !important;">Full Name</th>
+                            <th>Email</th>
+                            <th>Phone Number</th>
+                            <th>Role</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($sentmails as $sm)
+                        @foreach ($users as $usr)
                             <tr>
 
-                                <td><b>{{ $sm->title }}</b></td>
-                                <td>{{ $sm->recipients }}</td>
-                                <td>{{ $sm->category }}</td>
-                                <td>{{ $sm->status }}</td>
-                                <td class="btn-group">
-                                    <a href="{{url('mail/'.$sm->id)}}" class="btn btn-sm btn-primary">View</a>
-                                    <a href="{{url('deleteMail/'.$sm->id)}}" class="btn btn-sm btn-danger roledlink Super" onclick="confirm('Are you sure you delete this Sent Mail Record?')">Delete</a>
+                                <td>{{ $usr->name}}</td>
+                                <td>{{ $usr->email }}</td>
+                                <td>{{ $usr->phone_number }}</td>
+                                <th>{{$usr->role}}</th>
+                                <td class="button-group">
+                                    <a href="{{url('deleteUser/'.$usr->id)}}" class="btn btn-sm btn-danger roledlink Super" onclick="return confirm('Are you sure you delete this User?')">Delete</a>
                                 </td>
+
                             </tr>
                         @endforeach
 

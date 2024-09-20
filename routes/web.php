@@ -46,15 +46,19 @@ Route::get('/help', [App\Http\Controllers\HomeController::class, 'help'])->name(
 Route::post('/upload-image', [App\Http\Controllers\EmailController::class, 'uploadImage'])->name('upload-image');
 
 // EVENTS
-Route::get('/createEvent', [App\Http\Controllers\HomeController::class, 'createEvent'])->name('createEvent')->middleware('role:Super');
+Route::get('/createEvent', [App\Http\Controllers\HomeController::class, 'createEvent'])->name('createEvent')->middleware('role:Super,Admin');
 Route::get('/events', [App\Http\Controllers\HomeController::class, 'events'])->name('events')->middleware('role:Super');
 Route::get('/edit-event/{event_id}', [App\Http\Controllers\HomeController::class, 'editEvent'])->name('editEvent')->middleware('role:Super');
 
 Route::get('/event/{event_id}', [App\Http\Controllers\HomeController::class, 'event'])->name('event');
 Route::get('/postevent/{event_id}', [App\Http\Controllers\HomeController::class, 'addPostEvent'])->name('postevent');
-Route::post('/publishPostEvent', [App\Http\Controllers\HomeController::class, 'publishPostEvent'])->name('publishPostEvent')->middleware('role:Super');
+Route::post('/publishPostEvent', [App\Http\Controllers\HomeController::class, 'publishPostEvent'])->name('publishPostEvent')->middleware('role:Super,Admin');
 Route::get('/deleteEvent/{event_id}', [App\Http\Controllers\HomeController::class, 'deleteEvent'])->name('deleteEvent')->middleware('role:Super');
 
+Route::get('/userss', [App\Http\Controllers\HomeController::class, 'users'])->name('userss')->middleware('role:Super');
+Route::get('/createUser', [App\Http\Controllers\HomeController::class, 'createUser'])->name('createUser')->middleware('role:Super');
+Route::post('/addUser', [App\Http\Controllers\HomeController::class, 'addUser'])->name('addUser')->middleware('role:Super');
+Route::get('/deleteUser/{delUser}', [App\Http\Controllers\HomeController::class, 'deleteUser'])->name('deleteUser')->middleware('role:Super');
 
 Route::post('/publishEvent', [App\Http\Controllers\HomeController::class, 'publishEvent'])->name('publishEvent')->middleware('role:Super');
 Route::post('/registerEvent', [App\Http\Controllers\HomeController::class, 'registerEvent'])->name('registerEvent')->middleware('role:Super');

@@ -99,15 +99,15 @@
                     <!-- small box -->
                     <div class="small-box bg-danger">
                         <div class="inner">
-                            <h3>{{ $reservations->count() }}
+                            <h3>{{ $events->count() }}
                             </h3>
 
-                            <p># of Reservations</p>
+                            <p># of Events</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-stats-bars"></i>
                         </div>
-                        <a href="{{ url('reservations') }}" class="small-box-footer">View All <i
+                        <a href="{{ url('events') }}" class="small-box-footer">View All <i
                                 class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>

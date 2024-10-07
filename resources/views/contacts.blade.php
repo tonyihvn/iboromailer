@@ -44,7 +44,7 @@
                                 <td>{{ $cn->phone_number}}</td>
                                 <td>{{ $cn->group }}</td>
                                 <td>{{ $cn->info }}</td>
-                                <td><a href="{{url('delete-client/'.$cn->id)}}" class="btn btn-danger"  onclick="confirm('Are you sure you delete this clients?')">Delete</a></td>
+                                <td><a href="{{url('delete-client/'.$cn->id)}}" class="btn btn-danger"  onclick="return confirm('Are you sure you delete this clients?')">Delete</a></td>
                             </tr>
                         @endforeach
 

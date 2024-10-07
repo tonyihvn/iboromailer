@@ -34,4 +34,10 @@ class ContactsController extends Controller
 
         return redirect()->route('contacts')->with('message', 'Contact saved successfully!');
     }
+
+    public function deleteContact($cid){
+        contacts::find($cid)->delete();
+        return redirect()->route('contacts')->with('message', 'Contact deleted successfully!');
+
+    }
 }

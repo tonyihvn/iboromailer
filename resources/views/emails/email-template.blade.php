@@ -36,7 +36,7 @@
         
 
     </div>
-        <div class="row" style="background-color: #bfb28e; text-align: center !important; font-size: 0.9em; clear: both;">
+        <div class="row" style="background-color: #bfb28e; text-align: center !important; font-size: 0.9em; clear: both; padding-top: 15px; padding-bottom: 15px; color: #475661">
             <div class="col-sm-12">
                 <div>
                   <img src="https://ibotoempire.com/images/logo-transparent.png" alt="IBOTO EMPIRE"  style="width: 80px; height: 60px; position: relative;">

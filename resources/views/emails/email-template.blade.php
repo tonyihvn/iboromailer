@@ -34,10 +34,6 @@
         @endif
         {{-- <img src="{{ env('APP_URL') }}/public/images/ibotoFooter.png" alt="IBOTO EMPIRE"  style="width: 100%; height: auto; position: relative;"> --}}
         <div class="row">
-           
-
-           
-
             <div class="col-sm-12">
                 <div style="text-align: center !important">
                   <h4>GET IN TOUCH</h4>
@@ -47,7 +43,6 @@
                 </div>
             </div>
           </div>
-
         <div style="text-align: center !important">
             <a href="https://ibotoempire.com/our-privacy-policies.html" target="_blank">Our Privacy Policy</a>
         </div>

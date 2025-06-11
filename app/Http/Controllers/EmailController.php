@@ -63,7 +63,7 @@ class EmailController extends Controller
                 // Move the uploaded image to the public/images directory
                 $image2->move(public_path('images'), $filename2);
             }
-
+        $request->recipients = rtrim($request->recipients, ',');
         // Send the email to multiple recipients
         $recipients = explode(',', $request->recipients);
 
@@ -73,9 +73,10 @@ class EmailController extends Controller
             foreach($groupRecipients as $recips){
                 $grecipients.=$recips.",";
             }
-            $grec = explode($grecipients);
+            $grecipients = rtrim($grecipients, ',');
+            $grec = explode(',',$grecipients);
 
-            $recipients = array_merge($recipients,$gec);
+            $recipients = array_merge($recipients,$grec);
         }
 
         foreach ($recipients as $recipient) {

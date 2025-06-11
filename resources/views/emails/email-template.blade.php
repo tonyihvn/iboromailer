@@ -33,13 +33,15 @@
             <img src="{{ env('APP_URL') }}/public/images/{{ $bottom_image }}" alt="IBOTO EMPIRE"  style="width: 100%; height: auto; position: relative;">
         @endif
         {{-- <img src="{{ env('APP_URL') }}/public/images/ibotoFooter.png" alt="IBOTO EMPIRE"  style="width: 100%; height: auto; position: relative;"> --}}
-        <div class="row" style="background-color: #bfb28e; text-align: center !important; font-size: 0.8em">
+        
+
+    </div>
+        <div class="row" style="background-color: #bfb28e; text-align: center !important; font-size: 0.9em; clear: both;">
             <div class="col-sm-12">
                 <div>
-                  add logo
-                  <img src="https://ibotoempire.com/images/logo-transparent.png" alt="IBOTO EMPIRE"  style="width: 100px; height: 100px; position: relative;">
+                  <img src="https://ibotoempire.com/images/logo-transparent.png" alt="IBOTO EMPIRE"  style="width: 80px; height: 60px; position: relative;">
                   <p>Office Address: 6101 Cherry Avenue Suite 102A Fontana, CA 92336 USA</p>
-                  <p><b>Tel:</b> +1(909) 559-9031  <b>Email:</b> contactus@ibotoempire.com <b>Open Hours:</b> Mon to Fri: 9.00 AM 5.00 PM</p>
+                  <p><b>&#9743;</b> +1(909) 559-9031  <b>&#9993;</b> contactus@ibotoempire.com <b>&#9200;</b> Mon to Fri: 9.00 AM 5.00 PM</p>
                   <p>Copyright © 2023 IBOTO EMPIRE. All rights reserved.</p>
                 </div>
             </div>
@@ -48,7 +50,5 @@
             </div>
 
           </div>
-
-    </div>
 </body>
 </html>

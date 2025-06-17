@@ -36,12 +36,12 @@
         
 
     </div>
-        <div class="row" style="background-color: #bfb28e; text-align: center !important; font-size: 0.9em; clear: both; padding-top: 15px; padding-bottom: 15px; color: #475661">
+        <div class="row" style="text-align: center !important; font-size: 0.9em; clear: both; padding-top: 15px; padding-bottom: 15px; color: #475661 !important; text-decoration: none; font-weight: bold;">
             <div class="col-sm-12">
                 <div>
-                  <img src="https://ibotoempire.com/images/logo-transparent.png" alt="IBOTO EMPIRE"  style="width: 80px; height: 60px; position: relative;">
+                  {{-- <img src="https://ibotoempire.com/images/logo-transparent.png" alt="IBOTO EMPIRE"  style="width: 80px; height: 60px; position: relative;"> --}}
                   <p>Office Address: 6101 Cherry Avenue Suite 102A Fontana, CA 92336 USA</p>
-                  <p><b>&#9743;</b> +1(909) 559-9031  <b>&#9993;</b> contactus@ibotoempire.com <b>&#9200;</b> Mon to Fri: 9.00 AM 5.00 PM</p>
+                  <p><b>&#9743;</b> +1(909) 559-9031  <b>&#9993;</b> info@ibotoempire.com <b>&#9200;</b> Mon to Fri: 9.00 AM 5.00 PM</p>
                   <p>Copyright © 2023 IBOTO EMPIRE. All rights reserved.</p>
                 </div>
             </div>
